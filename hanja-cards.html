@@ -39,6 +39,29 @@ h1{font-size:22px;margin:4px 0 2px}
 .bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-bottom:6px}
 .fill{height:100%;background:linear-gradient(90deg,#ffb347,var(--accent));width:0;transition:width .3s}
 .pn{font-size:13px;color:var(--sub);margin-bottom:12px;min-height:20px}
+.pn .who{font-weight:700;color:var(--ink);margin-right:10px;display:inline-flex;align-items:center;gap:6px;vertical-align:middle}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg);margin:-16px -16px 10px;padding:10px 16px;border-bottom:1px solid var(--line)}
+.topbar .th{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;padding:7px 14px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.topbar .tu{display:inline-flex;align-items:center;gap:8px;min-width:0;font-size:14px;font-weight:700;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 12px 3px 4px;cursor:pointer;max-width:55%}
+.topbar .tu span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.av{display:inline-flex;align-items:center;justify-content:center;flex:none;border-radius:50%;overflow:hidden;color:#fff;font-weight:800;line-height:1;box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--line)}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.sumbox{border:1px solid var(--line);border-radius:14px;padding:12px;margin:6px 0 10px;background:var(--bg)}
+.sumhead{display:flex;align-items:center;gap:12px}
+.pct{font-size:38px;font-weight:800;line-height:1}.pct small{font-size:18px}
+.sumtx{font-size:13px;color:var(--sub);line-height:1.5}.sumtx b{color:var(--ink);font-size:14px}
+.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:10px 0}.meter span{display:block;height:100%;border-radius:4px}
+.sumt{font-size:13px;font-weight:700;margin:6px 0}
+.hard{display:flex;flex-direction:column;gap:6px}
+.hi{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 10px}
+.hi .rk{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.hi .hg{width:38px;height:38px;flex:none}
+.hi .ht{display:flex;flex-direction:column;min-width:0}.hi .ht small{color:var(--sub);font-size:12px}
+.uhead{display:flex;align-items:center;gap:14px;margin:2px 0 10px}
+.uhead .col{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1}
+.uhead .nm{font-size:18px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.uhead .acts{display:flex;gap:6px;flex-wrap:wrap}
+.uhead .btn.sm{padding:5px 12px;font-size:13px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 4px 14px rgba(60,100,160,.08)}
 .tag{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);background:var(--soft);border-radius:999px;padding:2px 10px;margin-bottom:8px}
 .q{font-size:15px;color:var(--sub);margin:0 0 6px}
@@ -70,15 +93,34 @@ h1{font-size:22px;margin:4px 0 2px}
 .cnt .btn:nth-child(3){background:var(--t3);border-color:var(--tb3)}
 .cnt .btn:nth-child(4){background:var(--t4);border-color:var(--tb4)}
 .padwrap{display:flex;justify-content:center}
-.pw{position:relative;width:min(100%,320px)}
+.pw{position:relative;width:min(100%,400px)}
 .pw canvas{width:100%}
-.ghost{position:absolute;inset:2px;pointer-events:none;opacity:.17;color:var(--ink);display:none}
+.ghost{position:absolute;inset:15%;pointer-events:none;opacity:.17;color:var(--ink);display:none}
+.ghost.trace{opacity:.38}
 .ghost svg{width:100%;height:100%;display:block}
 .hrow{display:flex;align-items:center;justify-content:center;gap:6px;margin:8px 0;flex-wrap:wrap}
 .hrow span{font-size:14px;font-weight:700}
 .hrow .hb{padding:6px 12px;min-height:0;font-size:13px;background:var(--t1);border-color:var(--tb1)}
 .hrow .hb.on{outline:2px solid var(--accent)}
 .txt{width:100%;font:inherit;font-size:14px;padding:8px 10px;margin:2px 0 8px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+[hidden]{display:none!important}
+.urow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0}
+.urow .txt{width:auto;flex:1;min-width:120px;margin:0}
+.ulist{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.rlist{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.rrow{display:flex;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.rrow.lv4{background:var(--t3);border-color:var(--tb3)} .rrow.lv3{background:var(--t2);border-color:var(--tb2)}
+.rrow.lv2{background:var(--t4);border-color:var(--tb4)} .rrow.lv1{background:var(--t1);border-color:var(--tb1)}
+.rg{flex:0 0 52px;width:52px} .rg svg{width:52px;height:52px;display:block}
+.rm{min-width:0;display:flex;flex-direction:column;gap:4px}
+.badge{font-size:13px;color:var(--sub)}
+.rs{display:flex;gap:6px;flex-wrap:wrap}
+.rchip{font-size:13px;padding:2px 8px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
+.rchip small{color:var(--sub)}
+.cmp{display:flex;gap:12px;justify-content:center;margin:10px 0}
+.cmp>div{flex:1;max-width:170px;text-align:center;font-size:13px;color:var(--sub);display:flex;flex-direction:column;gap:4px}
+.cmp svg{width:100%;height:auto;display:block;background:var(--pad);border:1px solid var(--line);border-radius:12px}
+.btn.danger{background:var(--no);border-color:var(--no);color:#fff}
 .hintbox{background:var(--t1);border:1px solid var(--tb1);border-radius:12px;padding:8px 12px;margin:8px 0;font-size:14px}
 canvas{width:min(100%,320px);aspect-ratio:1;background:var(--pad);border:2px solid var(--line);border-radius:12px;touch-action:none;cursor:crosshair;display:block}
 .hint{font-size:13px;color:var(--sub);margin:6px 0 0;text-align:center}
@@ -125,6 +167,7 @@ summary{cursor:pointer;font-weight:700;font-size:14px;padding:6px 0}
 </head>
 <body>
 <div class="wrap">
+  <div class="topbar" id="topbar"></div>
   <h1>📚 한자 문제 카드 <button class="snd" id="snd"></button></h1>
   <p class="lead" id="lead"></p>
   <div class="bar" id="barwrap" style="display:none"><div class="fill" id="fill"></div></div>
@@ -146,15 +189,132 @@ var D=META.map(function(m){
 var TOTAL=10, view=document.getElementById('view');
 var Q=[], idx=0, R=[];
 var SKEY='hanjaStats.v2', STATS={}, TS={}, SYNC='local';
-try{
-  var _r=localStorage.getItem(SKEY);
-  if(_r){ var _o=JSON.parse(_r)||{}; STATS=_o.s||{}; TS=_o.t||{}; }
-  else{ var _v1=localStorage.getItem('hanjaStats.v1'); if(_v1){ STATS=JSON.parse(_v1)||{}; Object.keys(STATS).forEach(function(k){ TS[k]=1; }); } }
-}catch(e){}
-function persistLocal(){ try{ localStorage.setItem(SKEY,JSON.stringify({s:STATS,t:TS})); }catch(e){} }
+var USERMODE=!(window.claude&&window.claude.use), CUR='', USERS=[], HIST=[], TALLY={}, RESET=0, RESETALL=0;
+var UKEY='hanjaUsers';
+function skey(){ return (USERMODE&&CUR)?SKEY+':'+CUR:SKEY; }
+function loadUsers(){
+  try{ var o=JSON.parse(localStorage.getItem(UKEY)||'null'); if(o){ USERS=(o.list||[]).slice(); CUR=o.cur||''; if(USERS.indexOf(CUR)<0) CUR=''; } }catch(e){}
+}
+function saveUsers(){ try{ localStorage.setItem(UKEY,JSON.stringify({list:USERS,cur:CUR})); }catch(e){} }
+function loadUserData(){
+  STATS={}; TS={}; HIST=[]; TALLY={}; RESET=0;
+  try{
+    var r=localStorage.getItem(skey());
+    if(r){ var o=JSON.parse(r)||{}; STATS=o.s||{}; TS=o.t||{}; TALLY=o.y||{}; RESET=o.z||0; }
+    else if(!USERMODE){ var v1=localStorage.getItem('hanjaStats.v1'); if(v1){ STATS=JSON.parse(v1)||{}; Object.keys(STATS).forEach(function(k){ TS[k]=1; }); } }
+    if(USERMODE&&CUR){ var h=localStorage.getItem('hanjaHist:'+CUR); if(h) HIST=JSON.parse(h)||[]; }
+  }catch(e){}
+}
+function saveHist(){ try{ localStorage.setItem('hanjaHist:'+CUR,JSON.stringify(HIST.slice(-100))); }catch(e){} }
+try{ RESETALL=parseInt(localStorage.getItem('hanjaResetAll')||'0',10)||0; }catch(e){}
+loadUsers(); loadUserData();
+function persistLocal(){ try{ localStorage.setItem(skey(),JSON.stringify({s:STATS,t:TS,y:TALLY,z:RESET})); }catch(e){} }
 function saveStats(){ persistLocal(); schedulePush(); }
 function touch(k){ TS[k]=Math.max(Date.now(),(TS[k]||0)+1); }
 function clearAllStats(){ Object.keys(STATS).forEach(touch); STATS={}; saveStats(); }
+/* ---------- 기록 초기화 ---------- */
+function putNull(u){ return fetch(u,{method:'PUT',headers:{'Content-Type':'application/json'},body:'null'}); }
+function resetUserData(){
+  var now=Date.now(); clearTimeout(pushTimer);
+  STATS={}; TS={}; TALLY={}; HIST=[]; RESET=now; persistLocal(); if(USERMODE&&CUR) saveHist();
+  if(!USERMODE){ Object.keys(STATS).forEach(touch); }
+  if(FB&&USERMODE&&CUR){
+    var u=fbUserUrl(CUR);
+    fetch(u+'/resetAt.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:String(now)})
+      .then(function(){ return Promise.all([putNull(u+'/rec.json'),putNull(u+'/hist.json'),putNull(u+'/tally.json')]); })
+      .then(function(){ SYNC='ok'; paintSync(); }).catch(function(){ SYNC='err'; paintSync(); });
+  }
+}
+function wipeLocalAll(ts){
+  try{
+    var del=[]; for(var i=0;i<localStorage.length;i++){ var k=localStorage.key(i); if(k&&(k.indexOf('hanjaStats.v')===0||k.indexOf('hanjaHist:')===0||k.indexOf('hanjaAvatar:')===0||k===UKEY)) del.push(k); }
+    del.forEach(function(k){ localStorage.removeItem(k); });
+    localStorage.setItem('hanjaResetAll',String(ts));
+  }catch(e){}
+  USERS=[]; CUR=''; STATS={}; TS={}; TALLY={}; HIST=[]; RESET=0; RESETALL=ts;
+}
+function resetEverything(){
+  var now=Date.now(); clearTimeout(pushTimer); wipeLocalAll(now);
+  if(FB){
+    var rm=fbRoom();
+    fetch(rm+'/resetAll.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:String(now)})
+      .then(function(){ return Promise.all([putNull(rm+'/users.json'),putNull(rm+'/rec.json')]); })
+      .then(function(){ SYNC='ok'; paintSync(); }).catch(function(){ SYNC='err'; paintSync(); });
+  }
+}
+/* ---------- 프로필 사진 ---------- */
+var AVKEY='hanjaAvatar:';
+function escH(n){ return String(n).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+function getAvatar(n){ try{ return localStorage.getItem(AVKEY+n)||''; }catch(e){ return ''; } }
+function setAvatarLocal(n,d){ try{ if(d) localStorage.setItem(AVKEY+n,d); else localStorage.removeItem(AVKEY+n); }catch(e){} }
+var AVCOL=['#ff7a59','#f5a623','#3fb27f','#3a9bdc','#8a6fdf','#e8569b','#2bb5b0','#7a8b99'];
+function avatarHtml(n,size){
+  var d=getAvatar(n), st='width:'+size+'px;height:'+size+'px;font-size:'+Math.round(size*0.5)+'px;';
+  if(d&&/^data:image\//.test(d)) return '<span class="av" style="'+st+'"><img alt="" src="'+escH(d)+'"></span>';
+  var h=0; for(var i=0;i<n.length;i++) h=(h*31+n.charCodeAt(i))>>>0;
+  return '<span class="av" style="'+st+'background:'+AVCOL[h%AVCOL.length]+'">'+escH(Array.from(n)[0]||'?')+'</span>';
+}
+function avatarFromFile(file,cb){
+  var rd=new FileReader();
+  rd.onload=function(){ var im=new Image(); im.onload=function(){
+    var S=96, c=document.createElement('canvas'); c.width=c.height=S; var g=c.getContext('2d');
+    var m=Math.min(im.width,im.height), sx=(im.width-m)/2, sy=(im.height-m)/2;
+    g.drawImage(im,sx,sy,m,m,0,0,S,S); cb(c.toDataURL('image/jpeg',0.82));
+  }; im.onerror=function(){ cb(''); }; im.src=rd.result; };
+  rd.onerror=function(){ cb(''); }; rd.readAsDataURL(file);
+}
+function saveAvatar(n,d){
+  setAvatarLocal(n,d);
+  if(FB&&USERMODE){ fetch(fbUserUrl(n)+'/avatar.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:d?JSON.stringify(d):'null'}).catch(function(){}); }
+}
+function paintTop(){
+  var tb=document.getElementById('topbar'); if(!tb) return;
+  tb.innerHTML='<button class="th" id="topHome">🏠 첫 페이지</button>'+((USERMODE&&CUR)?'<button class="tu" id="topUser" title="사용자 정보">'+avatarHtml(CUR,28)+'<span>'+escH(CUR)+'</span></button>':'');
+  document.getElementById('topHome').onclick=function(){ renderStart(); window.scrollTo(0,0); };
+  var tu=document.getElementById('topUser'); if(tu) tu.onclick=function(){ renderStart(); window.scrollTo(0,0); };
+}
+/* ---------- 사용자 등록 / 전환 ---------- */
+function validName(n){ n=String(n||'').trim(); return /^[^.$#\[\]\/\s][^.$#\[\]\/\x00-\x1f]{0,11}$/.test(n)?n:''; }
+function setUser(name){
+  if(FB&&pushTimer){ clearTimeout(pushTimer); fbPush(); }
+  CUR=name; saveUsers(); loadUserData(); if(FB) fbPull();
+}
+function registerUser(raw){
+  var n=validName(raw); if(!n) return 'bad';
+  if(USERS.indexOf(n)>=0){ setUser(n); return 'exists'; }
+  var first=!USERS.length, legacy=null;
+  try{ legacy=localStorage.getItem(SKEY); }catch(e){}
+  USERS.push(n);
+  if(first&&legacy){ try{ localStorage.setItem(SKEY+':'+n,legacy); }catch(e){} }  // 이전에 쌓은 기록은 첫 사용자가 이어받아요
+  if(FB){ fetch(fbUserUrl(n)+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({created:Date.now()})}).catch(function(){}); }
+  setUser(n); if(FB&&first&&legacy) schedulePush();
+  return 'ok';
+}
+/* 한자·유형별 누적: [푼 횟수, 첫 시도 정답, 최종 정답, 마지막 시각] */
+function tally(q,evt){
+  var k=qkey(q), e=TALLY[k]||[0,0,0,0];
+  if(evt==='first'){ e[0]++; } else if(evt==='firstok'){ e[0]++; e[1]++; e[2]++; } else { e[2]++; }
+  e[3]=Math.max(Date.now(),e[3]+1); TALLY[k]=e; saveStats();
+}
+function mergeTally(remote){
+  var changed=false, newer=false, rk=remote||{};
+  Object.keys(rk).forEach(function(k){ var r=rk[k]; if(!r||typeof r[3]!=='number'||r[3]<=RESET) return; var l=TALLY[k]; if(!l||r[3]>l[3]){ TALLY[k]=r.slice(0,4); changed=true; } });
+  Object.keys(TALLY).forEach(function(k){ if(!rk[k]||TALLY[k][3]>rk[k][3]) newer=true; });
+  return {changed:changed,newer:newer};
+}
+function addHist(n,ok){
+  var ts=Date.now(); HIST.push([ts,n,ok]); saveHist();
+  if(FB&&CUR){ var o={}; o[ts]=[n,ok]; fetch(fbUserUrl(CUR)+'/hist.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)}).catch(function(){}); }
+}
+function mergeHist(remote){
+  var have={}, changed=false, rk=remote||{}, miss={}, any=false;
+  HIST.forEach(function(h){ have[h[0]]=1; });
+  Object.keys(rk).forEach(function(k){ if(!have[k]&&+k>RESET){ HIST.push([+k,rk[k][0],rk[k][1]]); changed=true; } });
+  HIST.forEach(function(h){ if(!rk[h[0]]){ miss[h[0]]=[h[1],h[2]]; any=true; } });
+  HIST.sort(function(a,b){ return a[0]-b[0]; });
+  if(changed) saveHist();
+  return {changed:changed,missing:any?miss:null};
+}
 /* ---------- 계정 동기화 (db 기능이 있을 때만) ---------- */
 var REF=null, pushTimer=null, pushing=false, pushAgain=false;
 function recOf(){ var r={}; Object.keys(TS).forEach(function(k){ r[k]=[STATS[k]||0,TS[k]]; }); return r; }
@@ -162,13 +322,13 @@ function mergeRemote(rec){
   var changed=false, localNewer=false;
   Object.keys(rec||{}).forEach(function(k){
     var m=rec[k]&&rec[k][0], t=rec[k]&&rec[k][1];
-    if(typeof t!=='number') return;
+    if(typeof t!=='number'||t<=RESET) return;
     if(t>(TS[k]||0)){ TS[k]=t; if(m>0) STATS[k]=m; else delete STATS[k]; changed=true; }
   });
   Object.keys(TS).forEach(function(k){ if(!rec||!rec[k]||TS[k]>rec[k][1]) localNewer=true; });
   return {changed:changed,localNewer:localNewer};
 }
-function schedulePush(){ if(!REF&&!FB) return; clearTimeout(pushTimer); pushTimer=setTimeout(doPush,800); }
+function schedulePush(){ if(!REF&&!FB) return; if(USERMODE&&!CUR&&!REF) return; clearTimeout(pushTimer); pushTimer=setTimeout(doPush,800); }
 function doPush(){
   if(FB){ fbPush(); return; }
   if(!REF) return;
@@ -181,27 +341,63 @@ function doPush(){
 /* ---------- Firebase Realtime Database (REST) 공유 ---------- */
 var FB=null, fbTimer=null, FBKEY='hanjaFB';
 function fbValid(c){ return c&&typeof c.u==='string'&&typeof c.r==='string'&&/^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)*\.(firebaseio\.com|firebasedatabase\.app)\/?$/.test(c.u)&&/^[A-Za-z0-9_-]{4,40}$/.test(c.r); }
-function fbBase(){ return FB.u.replace(/\/+$/,'')+'/rooms/'+encodeURIComponent(FB.r)+'/rec.json'; }
+function fbRoom(){ return FB.u.replace(/\/+$/,'')+'/rooms/'+encodeURIComponent(FB.r); }
+function fbUserUrl(n){ return fbRoom()+'/users/'+encodeURIComponent(n); }
+function fbBase(){ return (USERMODE&&CUR)?fbUserUrl(CUR)+'/rec.json':fbRoom()+'/rec.json'; }
 function fbLoad(){
   try{ var h=location.hash||''; var m=h.match(/^#fb=([^&]+)/);
     if(m){ var c=JSON.parse(atob(decodeURIComponent(m[1]))); if(fbValid(c)){ FB=c; try{ localStorage.setItem(FBKEY,JSON.stringify(c)); }catch(e){} return; } } }catch(e){}
   try{ var s=localStorage.getItem(FBKEY); if(s){ var c2=JSON.parse(s); if(fbValid(c2)) FB=c2; } }catch(e){}
 }
+function getJson(u){ return fetch(u).then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); }); }
 function fbPull(){
   if(!FB) return Promise.resolve();
-  return fetch(fbBase()).then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); }).then(function(rec){
-    var m=mergeRemote(rec||{}); SYNC='ok';
-    if(m.changed){ persistLocal(); if(!Q.length) renderStart(); }
+  if(!USERMODE) return fbPullMain();
+  return getJson(fbRoom()+'/resetAll.json').then(function(ra){
+    if(typeof ra==='number'&&ra>RESETALL){ wipeLocalAll(ra); renderStart(); return false; }
+    return true;
+  }).catch(function(){ return true; }).then(function(go){ return go?fbPullMain():null; });
+}
+function fbPullMain(){
+  if(!FB) return Promise.resolve();
+  var cur=CUR, jobs=[];
+  if(USERMODE){
+    jobs.push(getJson(fbRoom()+'/users.json?shallow=true'));
+    if(cur){ jobs.push(getJson(fbBase())); jobs.push(getJson(fbUserUrl(cur)+'/hist.json')); jobs.push(getJson(fbUserUrl(cur)+'/tally.json')); jobs.push(getJson(fbUserUrl(cur)+'/resetAt.json')); jobs.push(getJson(fbUserUrl(cur)+'/avatar.json')); }
+  }else jobs.push(getJson(fbBase()));
+  return Promise.all(jobs).then(function(r){
+    if(cur!==CUR) return;                       // 가져오는 사이에 사용자가 바뀌었으면 버립니다
+    var redraw=false, m={changed:false,localNewer:false};
+    if(USERMODE){
+      Object.keys(r[0]||{}).forEach(function(n){ if(USERS.indexOf(n)<0&&validName(n)){ USERS.push(n); redraw=true; } });
+      if(redraw) saveUsers();
+      var remoteUsers=r[0]||{};
+      USERS.forEach(function(n){ if(!remoteUsers[n]) fetch(fbUserUrl(n)+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({created:Date.now()})}).catch(function(){}); });
+      if(cur){
+        var ra=r[4];
+        if(typeof ra==='number'&&ra>RESET){ STATS={}; TS={}; TALLY={}; HIST=[]; RESET=ra; persistLocal(); saveHist(); redraw=true; }
+        if(typeof r[5]==='string'&&r[5]!==getAvatar(cur)&&/^data:image\//.test(r[5])){ setAvatarLocal(cur,r[5]); redraw=true; }
+        else if(!r[5]&&getAvatar(cur)) fetch(fbUserUrl(cur)+'/avatar.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(getAvatar(cur))}).catch(function(){});
+        m=mergeRemote(r[1]||{});
+        var hm=mergeHist(r[2]); if(hm.changed) redraw=true;
+        var tm=mergeTally(r[3]); if(tm.changed){ redraw=true; persistLocal(); } if(tm.newer) m.localNewer=true;
+        if(hm.missing) fetch(fbUserUrl(cur)+'/hist.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(hm.missing)}).catch(function(){});
+      }
+    }else m=mergeRemote(r[0]||{});
+    SYNC='ok';
+    if(m.changed){ persistLocal(); redraw=true; }
+    if(redraw&&!Q.length){ if(VIEWREP) renderReport(REPSORT); else renderStart(); }
     if(m.localNewer) schedulePush();
     paintSync();
   }).catch(function(){ SYNC='err'; paintSync(); });
 }
 function fbPush(){
-  if(!FB) return;
+  if(!FB||(USERMODE&&!CUR)) return;
   if(pushing){ pushAgain=true; return; }
   pushing=true;
-  fetch(fbBase(),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(recOf())})
-    .then(function(r){ if(!r.ok) throw new Error(r.status); SYNC='ok'; }).catch(function(){ SYNC='err'; })
+  var jobs=[fetch(fbBase(),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(recOf())})];
+  if(USERMODE&&CUR&&Object.keys(TALLY).length) jobs.push(fetch(fbUserUrl(CUR)+'/tally.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(TALLY)}));
+  Promise.all(jobs).then(function(rs){ rs.forEach(function(r){ if(!r.ok) throw new Error(r.status); }); SYNC='ok'; }).catch(function(){ SYNC='err'; })
     .then(function(){ pushing=false; paintSync(); if(pushAgain){ pushAgain=false; fbPush(); } });
 }
 function fbStart(){
@@ -220,11 +416,92 @@ function fbConnect(u,r){
 function fbDisconnect(){ FB=null; try{ localStorage.removeItem(FBKEY); }catch(e){} clearInterval(fbTimer); SYNC='local'; }
 function fbLink(){ return location.href.split('#')[0]+'#fb='+encodeURIComponent(btoa(JSON.stringify(FB))); }
 function newRoom(){ var a='abcdefghijkmnpqrstuvwxyz23456789',s=''; for(var i=0;i<10;i++) s+=a[Math.floor(Math.random()*a.length)]; return s; }
+function userHtml(){
+  if(!USERMODE) return '';
+  var esc=function(n){ return n.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); };
+  var opts=USERS.map(function(n){ return '<option value="'+esc(n)+'"'+(n===CUR?' selected':'')+'>'+esc(n)+'</option>'; }).join('');
+  var form='<div class="urow" id="uForm"'+(USERS.length?' hidden':'')+'><input id="uName" class="txt" maxlength="12" placeholder="이름 (12자까지)" autocomplete="off"><button class="btn main" id="uAdd">등록</button></div><p class="hint" id="uMsg"></p>';
+  if(!CUR){
+    return '<div class="card"><span class="tag">사용자</span><p class="q">먼저 이름을 등록하세요. 기록과 결과가 이름별로 따로 저장돼요.'+(FB?'':' 이미 등록한 사람이 있다면 아래 “기록 공유”를 먼저 연결하면 그 이름이 나타나요.')+'</p>'+
+      (USERS.length?'<div class="ulist">'+USERS.map(function(n){ return '<button class="btn ubtn" data-u="'+esc(n)+'" style="display:inline-flex;align-items:center;gap:6px">'+avatarHtml(n,24)+esc(n)+'</button>'; }).join('')+'</div><button class="fix" id="uNew">+ 새 사용자 등록</button>':'')+
+      form+'</div>';
+  }
+  var h=HIST.slice(-5).reverse().map(function(x){ var d=new Date(x[0]); return (d.getMonth()+1)+'/'+d.getDate()+' <b>'+x[2]+'/'+x[1]+'</b>'; }).join(' · ');
+  return '<div class="card"><span class="tag">사용자</span><div class="uhead">'+avatarHtml(CUR,64)+'<div class="col"><div class="nm">'+esc(CUR)+'</div><div class="acts"><button class="btn sm" id="avPick">📷 사진 변경</button>'+(getAvatar(CUR)?'<button class="btn sm" id="avDel">사진 삭제</button>':'')+'</div></div><input type="file" id="avFile" accept="image/*" hidden></div><div class="urow"><select id="uSel" class="txt">'+opts+'</select><button class="btn" id="uNew">+ 사용자 추가</button></div><p class="hint" id="avMsg"></p>'+form+
+    summaryHtml()+(h?'<p class="info">📈 최근 결과 '+h+'</p>':(summaryHtml()?'':'<p class="info">아직 푼 기록이 없어요. 한 번 풀면 여기에 결과가 쌓여요.</p>'))+'</div>';
+}
+function summaryHtml(){
+  var n=0, first=0, seen=0;
+  D.forEach(function(h){ var s=statOf(h); n+=s.n; first+=s.first; if(s.n) seen++; });
+  if(!n) return '';
+  var pct=Math.round(first/n*100);
+  var rows=D.map(function(h){ var s=statOf(h); s.h=h; return s; }).filter(function(s){ return s.n&&(s.first<s.n||s.miss>0); });
+  rows.forEach(function(s){ s.sr=(s.first+1)/(s.n+2); });
+  rows.sort(function(a,b){ return (a.sr-b.sr)||(b.miss-a.miss)||(b.n-a.n); });
+  var top=rows.slice(0,5);
+  var col=pct>=80?'var(--ok)':(pct>=50?'var(--accent)':'var(--no)');
+  var h='<div class="sumbox"><div class="sumhead"><div class="pct" style="color:'+col+'">'+pct+'<small>%</small></div><div class="sumtx"><b>첫 시도 정답률</b><br>총 '+n+'문제 중 '+first+'개 · 푼 한자 '+seen+'/'+D.length+'자</div></div>'+
+    '<div class="meter"><span style="width:'+pct+'%;background:'+col+'"></span></div>';
+  if(top.length){
+    h+='<p class="sumt">😵 가장 안 외워지는 한자 '+top.length+'개</p><div class="hard">'+top.map(function(s,i){
+      var p=Math.round(s.first/s.n*100);
+      return '<div class="hi"><span class="rk">'+(i+1)+'</span>'+glyph(s.h.ch,'hg')+'<div class="ht"><b>'+s.h.hun+' '+s.h.eum+'</b><small>첫 시도 '+s.first+'/'+s.n+' ('+p+'%)</small></div></div>';
+    }).join('')+'</div>';
+  }else h+='<p class="info">아직 틀린 한자가 없어요. 👏</p>';
+  return h+'<div class="row" style="margin-top:8px"><button class="btn sm" id="sumRep">📊 한자별 평가 전체 보기</button></div></div>';
+}
+function userBind(){
+  var sr=document.getElementById('sumRep'); if(sr) sr.onclick=function(){ renderReport(); };
+  if(!USERMODE) return;
+  var add=document.getElementById('uAdd'), msg=document.getElementById('uMsg');
+  if(add) add.onclick=function(){
+    var r=registerUser(document.getElementById('uName').value);
+    if(r==='bad'){ msg.textContent='이름은 1~12자로, 처음에 공백이 없고 . $ # [ ] / 문자가 없어야 해요.'; return; }
+    renderStart();
+  };
+  var nm=document.getElementById('uName'); if(nm) nm.onkeydown=function(e){ if(e.key==='Enter'&&add) add.onclick(); };
+  var nw=document.getElementById('uNew'); if(nw) nw.onclick=function(){ var f=document.getElementById('uForm'); f.hidden=false; document.getElementById('uName').focus(); };
+  var ap=document.getElementById('avPick'), af=document.getElementById('avFile'), ad=document.getElementById('avDel');
+  if(ap&&af){ ap.onclick=function(){ af.click(); }; af.onchange=function(){
+    var f=af.files&&af.files[0]; if(!f) return;
+    avatarFromFile(f,function(d){ if(!d){ var m=document.getElementById('avMsg'); if(m) m.textContent='사진을 읽지 못했어요. 다른 사진을 골라 보세요.'; return; } saveAvatar(CUR,d); renderStart(); });
+  }; }
+  if(ad) ad.onclick=function(){ saveAvatar(CUR,''); renderStart(); };
+  var sel=document.getElementById('uSel'); if(sel) sel.onchange=function(){ setUser(sel.value); renderStart(); };
+  view.querySelectorAll('.ubtn').forEach(function(b){ b.onclick=function(){ setUser(b.getAttribute('data-u')); renderStart(); }; });
+}
+var RSTCONF='';
+function rstPanel(){
+  var who=(USERMODE&&CUR)?CUR.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'님':'내';
+  return '<details id="rstset"><summary>🗑️ 기록 초기화</summary>'+
+    '<p class="info">풀이 기록을 지우고 처음부터 다시 시작할 수 있어요. 지운 기록은 되돌릴 수 없어요.'+(FB?' Firebase에 연결되어 있으면 다른 기기에도 함께 반영돼요.':'')+'</p>'+
+    '<div id="rstBox">'+rstBoxHtml()+'</div></details>';
+}
+function rstBoxHtml(){
+  var who=(USERMODE&&CUR)?CUR.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'님':'내';
+  if(RSTCONF==='user') return '<p class="verdict bad" style="text-align:center">정말 '+who+' 기록을 모두 지울까요?</p><p class="info">틀린 문제 기록, 한자별 평가, 결과 내역이 모두 지워져요.</p><div class="row"><button class="btn danger" id="rstYes">네, 지웁니다</button><button class="btn" id="rstNo">취소</button></div>';
+  if(RSTCONF==='all') return '<p class="verdict bad" style="text-align:center">정말 모든 사용자와 기록을 지울까요?</p><p class="info">이 기기의 모든 사용자와 기록이 지워지고'+(FB?', 연결된 방(코드 '+FB.r+')의 모든 사용자·기록도 지워져요':'')+'. 사용자는 다시 등록해야 해요.</p><div class="row"><button class="btn danger" id="rstYes">네, 모두 지웁니다</button><button class="btn" id="rstNo">취소</button></div>';
+  return '<div class="row"><button class="btn" id="rstUser">'+who+' 기록 초기화</button>'+(USERMODE&&USERS.length?'<button class="btn" id="rstAll">모든 사용자·기록 삭제</button>':'')+'</div><p class="hint" id="rstMsg"></p>';
+}
+function rstBind(){
+  var box=document.getElementById('rstBox'); if(!box) return;
+  var paint=function(){ box.innerHTML=rstBoxHtml(); rstBind(); };
+  var u=document.getElementById('rstUser'), a=document.getElementById('rstAll'), y=document.getElementById('rstYes'), n=document.getElementById('rstNo');
+  if(u) u.onclick=function(){ RSTCONF='user'; paint(); };
+  if(a) a.onclick=function(){ RSTCONF='all'; paint(); };
+  if(n) n.onclick=function(){ RSTCONF=''; paint(); };
+  if(y) y.onclick=function(){
+    var was=RSTCONF; RSTCONF='';
+    if(was==='user') resetUserData(); else resetEverything();
+    renderStart();
+    var m=document.getElementById('rstMsg'); if(m) m.textContent='기록을 초기화했어요.';
+  };
+}
 function fbPanel(){
   if(window.claude&&window.claude.use) return '';
   var u=FB?FB.u:'', r=FB?FB.r:'';
   return '<details id="fbset"'+(FB?'':' open')+'><summary>☁️ 다른 사람·기기와 기록 공유 (Firebase)</summary>'+
-    '<p class="info">Firebase 실시간 데이터베이스 주소와 방 코드를 넣으면, 같은 방 코드를 쓰는 모든 기기의 틀린 기록이 하나로 합쳐져요. 방 코드는 비밀번호 역할을 하니 함께 쓸 사람에게만 알려 주세요.</p>'+
+    '<p class="info">Firebase 실시간 데이터베이스 주소와 방 코드를 넣으면, 같은 방 코드를 쓰는 모든 기기에서 사용자 목록과 사용자별 기록이 공유돼요. 방 코드는 비밀번호 역할을 하니 함께 쓸 사람에게만 알려 주세요.</p>'+
     '<label class="info" for="fbUrl"><b>데이터베이스 주소</b></label><input id="fbUrl" class="txt" type="url" placeholder="https://내프로젝트-default-rtdb.firebaseio.com" value="'+u.replace(/"/g,'&quot;')+'">'+
     '<label class="info" for="fbRoom"><b>방 코드</b> (영문·숫자 4~40자)</label><input id="fbRoom" class="txt" type="text" placeholder="예: kim-hanja" value="'+r.replace(/"/g,'&quot;')+'">'+
     '<div class="row"><button class="btn main" id="fbGo">연결하기</button><button class="btn" id="fbNew">새 방 코드</button>'+(FB?'<button class="btn" id="fbOff">연결 끊기</button>':'')+'</div>'+
@@ -275,7 +552,9 @@ function initSync(){
 }
 function qkey(q){ return q.h.ch+'|'+q.t; }
 function missOf(q){ return STATS[qkey(q)]||0; }
-function weightOf(q){ return 1+4*missOf(q); }
+// 처음엔 모두 같은 확률(무작위). 풀어 본 문제는 첫 시도 정답률이 낮을수록(그리고 최근에 틀렸을수록) 다시 나올 확률이 커집니다.
+function rateOf(q){ var e=TALLY[qkey(q)]; return e&&e[0]?(e[1]+1)/(e[0]+2):0.5; }
+function weightOf(q){ var r=rateOf(q); return 0.3+6*(1-r)*(1-r)+missOf(q); }
 function setMiss(q,v){ var k=qkey(q); if(v>0) STATS[k]=v; else delete STATS[k]; touch(k); saveStats(); }
 function recordResult(q,ok){ var prev=missOf(q); setMiss(q, ok?Math.max(0,prev-1):Math.min(5,prev+1)); return prev; }
 function reviewList(){ var s=[]; D.forEach(function(h){ if(missOf({h:h,t:'A'})>0||missOf({h:h,t:'B'})>0) s.push(h); }); return s; }
@@ -348,24 +627,30 @@ function markSvg(ok){
   return '<svg viewBox="0 0 100 100" aria-label="오답"><line class="ln" x1="22" y1="22" x2="78" y2="78" stroke="var(--no)" stroke-width="10" stroke-linecap="round"/><line class="ln d2" x1="78" y1="22" x2="22" y2="78" stroke="var(--no)" stroke-width="10" stroke-linecap="round"/></svg>';
 }
 function paintProgress(){
+  paintTop();
   var bw=document.getElementById('barwrap'), pn=document.getElementById('pn'), fill=document.getElementById('fill');
   if(!Q.length){ bw.style.display='none'; pn.textContent=''; return; }
   bw.style.display='block';
-  pn.textContent=idx>=TOTAL?'결과':('문제 '+(idx+1)+' / '+TOTAL);
+  pn.textContent='';
+  if(USERMODE&&CUR){ var who=document.createElement('span'); who.className='who'; who.innerHTML=avatarHtml(CUR,22)+escH(CUR); pn.appendChild(who); }
+  pn.appendChild(document.createTextNode(idx>=TOTAL?'결과':('문제 '+(idx+1)+' / '+TOTAL)));
   fill.style.width=Math.round(R.length/TOTAL*100)+'%';
 }
 function wordsHtml(h){ return h.words.map(function(w){return '<span class="w">'+w[0]+'</span>'+w[1]+'('+w[2]+')';}).join(' · '); }
 
 /* ---------- 피드백 ---------- */
 var advTok=0;
-function autoNext(){ var my=++advTok, at=idx; setTimeout(function(){ if(my===advTok && idx===at){ idx++; render(); } },1500); }
+function autoNext(ms){ var my=++advTok, at=idx; setTimeout(function(){ if(my===advTok && idx===at){ idx++; render(); } },ms||1500); }
 function showFeedback(ok,msg,detail,opts){
   var fb=document.getElementById('fb'), isLast=idx===TOTAL-1;
   fb.className='fb';
   if(ok){
-    fb.innerHTML='<div class="mark" id="mk">'+markSvg(true)+'</div><div class="verdict good" id="vd"></div><p class="hint" style="text-align:center">'+(isLast?'곧 결과가 나와요…':'곧 다음 문제로 넘어가요…')+'</p>';
+    var cmp=opts&&opts.cmp;
+    fb.innerHTML='<div class="mark" id="mk">'+markSvg(true)+'</div><div class="verdict good" id="vd"></div>'+(cmp||'')+'<p class="hint" style="text-align:center">'+(isLast?'곧 결과가 나와요…':'곧 다음 문제로 넘어가요…')+'</p>'+
+      (cmp?'<div class="row"><button class="btn" id="skipQ">'+(isLast?'바로 결과 보기 →':'바로 다음 →')+'</button></div>':'');
     document.getElementById('vd').textContent='🎉 '+msg; playSound('ok');
-    fb.scrollIntoView({behavior:'smooth',block:'nearest'}); autoNext(); return;
+    var sk=document.getElementById('skipQ'); if(sk) sk.onclick=function(){ idx++; render(); };
+    fb.scrollIntoView({behavior:'smooth',block:'nearest'}); autoNext(cmp?3500:1500); return;
   }
   fb.innerHTML=
     '<div class="mark" id="mk">'+markSvg(ok)+'</div>'+
@@ -377,7 +662,7 @@ function showFeedback(ok,msg,detail,opts){
   document.getElementById('nextQ').onclick=function(){ idx++; render(); };
   var fx=document.getElementById('fixBtn');
   if(fx) fx.onclick=function(){
-    R[idx].ok=true; setMiss(R[idx].q,Math.max(0,R[idx].prev-1)); playSound('ok');
+    R[idx].ok=true; tally(R[idx].q,'fix'); setMiss(R[idx].q,Math.max(0,R[idx].prev-1)); playSound('ok');
     document.getElementById('mk').innerHTML=markSvg(true);
     var vd=document.getElementById('vd'); vd.className='verdict good'; vd.textContent='🎉 정답으로 고쳤어요.';
     fx.parentNode.removeChild(fx);
@@ -387,7 +672,7 @@ function showFeedback(ok,msg,detail,opts){
 
 /* ---------- 시작 화면 ---------- */
 function renderStart(){
-  Q=[]; idx=0; R=[]; paintProgress();
+  advTok++; Q=[]; idx=0; R=[]; VIEWREP=false; paintProgress();
   document.getElementById('lead').textContent='무작위 문제입니다. 한 번에 한 문제씩 나오고, 풀 때마다 ○ 또는 ✕로 알려 줍니다. 마지막에 몇 개 맞았는지 알려 드려요.';
   var rl=reviewList();
   setTimeout(paintSync,0);
@@ -395,16 +680,20 @@ function renderStart(){
   view.innerHTML=
     '<p class="hint" id="syncst" style="text-align:center;margin:0 0 6px"></p>'+
     '<div class="deco">🐦 🐴 🌸 🌧️ 👑 🐟 🎋</div>'+
-    '<div class="card"><span class="tag">문제 수 고르기</span>'+
+    userHtml()+
+    (USERMODE&&!CUR?'':'<div class="card"><span class="tag">문제 수 고르기</span>'+
     '<p class="q">한자 '+D.length+'자에서 한자→훈·음, 훈·음→쓰기 문제가 섞여 나옵니다. 몇 문제를 풀까요?</p>'+
     '<div class="cnt">'+[10,20,30,40].map(function(n){ return '<button class="btn" data-n="'+n+'">'+n+'문제<small>약 '+Math.round(n*0.4)+'분</small></button>'; }).join('')+'</div>'+
+    '<div class="row"><button class="btn" id="repBtn">📊 한자별 평가 보기</button></div>'+
     (rl.length?'<p class="info">🔁 틀렸던 문제가 있는 한자 <b>'+rl.length+'</b>자: '+rl.map(function(h){return h.ch;}).join(' ')+' — 더 자주 나와요. <button class="fix" id="clrStats">기록 지우기</button></p>':'<p class="info">틀린 문제는 기억해 두었다가 다음 퀴즈에 더 자주 내 드려요.</p>')+
-    fbPanel()+
+    '</div>')+
+    '<div class="card">'+fbPanel()+rstPanel()+
     '<details><summary>이번 범위의 한자 '+D.length+'자 미리 보기</summary><div class="grid">'+items+'</div></details></div>';
   view.querySelectorAll('.cnt .btn').forEach(function(b){
     b.onclick=function(){ newQuiz(parseInt(b.getAttribute('data-n'),10)); render(); };
   });
-  fbBind();
+  fbBind(); userBind(); rstBind();
+  var rb=document.getElementById('repBtn'); if(rb) rb.onclick=function(){ renderReport('weak'); };
   var cs=document.getElementById('clrStats'); if(cs) cs.onclick=function(){ clearAllStats(); renderStart(); };
   window.scrollTo(0,0);
 }
@@ -414,20 +703,35 @@ function renderA(q){
   var h=q.h, answer=h.hun+' '+h.eum;
   view.innerHTML=
     '<div class="card"><span class="tag">한자 → 훈·음</span>'+(missOf(q)>0?'<span class="tag rv">🔁 복습</span>':'')+
-    '<p class="q">이 한자의 훈(뜻)과 음(소리)으로 알맞은 것을 고르세요.</p>'+
+    '<p class="q">이 한자의 훈(뜻)과 음(소리)으로 알맞은 것을 고르세요. <span class="tag">기회 2번</span></p>'+
     glyph(h.ch,'big')+
     '<div class="opts" id="opts"></div><div id="fb"></div></div>';
-  var all=shuffle([answer].concat(h.wrong)), box=document.getElementById('opts');
+  var all=shuffle([answer].concat(h.wrong)), box=document.getElementById('opts'), tries=0;
   all.forEach(function(txt){
     var b=document.createElement('button'); b.className='btn opt'; b.textContent=txt;
     b.onclick=function(){
-      var ok=txt===answer; R[idx]={ok:ok,q:q,prev:recordResult(q,ok)};
-      box.querySelectorAll('button').forEach(function(x){ x.disabled=true; if(x.textContent===answer) x.classList.add('right'); });
-      if(!ok) b.classList.add('wrongsel');
+      tries++;
+      var ok=txt===answer;
+      if(tries===1){ R[idx]={ok:ok,q:q,prev:recordResult(q,ok)}; tally(q,ok?'firstok':'first'); }
+      else if(ok){ R[idx].ok=true; R[idx].second=true; tally(q,'second'); }
       paintProgress();
-      showFeedback(ok, ok?('정답이에요! “'+answer+'”'):('아쉬워요. 정답은 “'+answer+'”입니다.'),
-        picsHtml(h)+'<div class="meanbox"><p class="mean">'+answer+'</p></div>'+
-        '<p class="info"><b>왜 이렇게 생겼나</b> '+h.origin+'</p><p class="info"><b>구별 요령</b> '+h.tip+'</p><p class="info"><b>낱말</b> '+wordsHtml(h)+'</p>');
+      var detail=picsHtml(h)+'<div class="meanbox"><p class="mean">'+answer+'</p></div>'+
+        '<p class="info"><b>왜 이렇게 생겼나</b> '+h.origin+'</p><p class="info"><b>구별 요령</b> '+h.tip+'</p><p class="info"><b>낱말</b> '+wordsHtml(h)+'</p>';
+      if(ok){
+        box.querySelectorAll('button').forEach(function(x){ x.disabled=true; if(x.textContent===answer) x.classList.add('right'); });
+        showFeedback(true, tries>1?'두 번째에 맞았어요! “'+answer+'”':'정답이에요! “'+answer+'”', detail);
+        return;
+      }
+      b.disabled=true; b.classList.add('wrongsel');
+      if(tries===1){      // 두 번째 기회
+        var fb=document.getElementById('fb'); fb.className='fb';
+        fb.innerHTML='<div class="mark" id="mk">'+markSvg(false)+'</div><div class="verdict bad" id="vd"></div><p class="hint" style="text-align:center">기회가 한 번 더 있어요. 다른 보기를 골라 보세요.</p>';
+        document.getElementById('vd').textContent='💪 아쉬워요!'; playSound('no');
+        fb.scrollIntoView({behavior:'smooth',block:'nearest'});
+        return;
+      }
+      box.querySelectorAll('button').forEach(function(x){ x.disabled=true; if(x.textContent===answer) x.classList.add('right'); });
+      showFeedback(false,'두 번 모두 아쉬워요. 정답은 “'+answer+'”입니다.',detail);
     };
     box.appendChild(b);
   });
@@ -441,8 +745,10 @@ function setupPad(){
     g.clearRect(0,0,c.width,c.height);
     var gc=getComputedStyle(document.documentElement).getPropertyValue('--guide').trim()||'#ddd';
     g.save(); g.strokeStyle=gc; g.lineWidth=2; g.setLineDash([8,8]);
-    g.beginPath(); g.moveTo(c.width/2,8); g.lineTo(c.width/2,c.height-8);
-    g.moveTo(8,c.height/2); g.lineTo(c.width-8,c.height/2); g.stroke(); g.restore();
+    var m=c.width*0.15;
+    g.strokeRect(m,m,c.width-2*m,c.height-2*m);
+    g.beginPath(); g.moveTo(c.width/2,m); g.lineTo(c.width/2,c.height-m);
+    g.moveTo(m,c.height/2); g.lineTo(c.width-m,c.height/2); g.stroke(); g.restore();
   }
   function pos(e){ var r=c.getBoundingClientRect(); var s=c.width/r.width; return [(e.clientX-r.left)*s,(e.clientY-r.top)*s]; }
   c.addEventListener('pointerdown',function(e){ down=true; last=pos(e); cur=[last]; strokes.push(cur); try{c.setPointerCapture(e.pointerId);}catch(x){} e.preventDefault(); });
@@ -453,7 +759,7 @@ function setupPad(){
     g.beginPath(); g.moveTo(last[0],last[1]); g.lineTo(p[0],p[1]); g.stroke(); last=p; cur.push(p); e.preventDefault();
   });
   function up(){ if(down&&cur&&cur.length===1){ g.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--ink').trim()||'#000'; g.beginPath(); g.arc(cur[0][0],cur[0][1],5,0,6.283); g.fill(); } down=false; }
-  c.addEventListener('pointerup',up); c.addEventListener('pointercancel',up); c.addEventListener('pointerleave',up);
+  c.addEventListener('pointerup',up); c.addEventListener('pointercancel',up);
   document.getElementById('clr').onclick=function(){ strokes.length=0; bg(); document.getElementById('hintB').textContent=''; };
   bg();
   return {get:function(){ return strokes; }, lock:function(){ c.style.pointerEvents='none'; }, clear:function(){ strokes.length=0; bg(); }};
@@ -502,7 +808,7 @@ function judgePaths(h,raw){
 
 /* ---------- 채점 2: 모양 비교(나머지 한자) ---------- */
 // 글자 중심선(기준)과 손글씨의 점들이 위치·방향 모두 얼마나 겹치는지 비교합니다.
-var R_O=3.5, LAM=6, CAP=12, RS=10, TH_SUM=8.0, TH_SUM_ONEOFF=5.5, TPL={};
+var R_O=3.5, LAM=6, CAP=12, RS=10, TH_SUM=8.0, TH_SUM_ONEOFF=5.5, TH_FREE=6.5, RIVAL_RATIO=0.71, TPL={};
 function tplFor(ch){
   if(TPL[ch]) return TPL[ch];
   var a=GLYPH[ch].sk, n=a.length/2, X=new Float64Array(n), Y=new Float64Array(n);
@@ -542,19 +848,19 @@ function oneway(A,B){
   return s/A.n;
 }
 function densify(strokes,step){
-  var X=[],Y=[];
+  var X=[],Y=[],S=[],si=-1;
   strokes.forEach(function(s){
-    if(!s.length) return;
-    X.push(s[0][0]); Y.push(s[0][1]);
+    if(!s.length) return; si++;
+    X.push(s[0][0]); Y.push(s[0][1]); S.push(si);
     for(var i=1;i<s.length;i++){
       var dx=s[i][0]-s[i-1][0], dy=s[i][1]-s[i-1][1], L=Math.hypot(dx,dy), k=Math.floor(L/step);
-      for(var m=1;m<=k;m++){ X.push(s[i-1][0]+dx*m/(k+1)); Y.push(s[i-1][1]+dy*m/(k+1)); }
-      X.push(s[i][0]); Y.push(s[i][1]);
+      for(var m=1;m<=k;m++){ X.push(s[i-1][0]+dx*m/(k+1)); Y.push(s[i-1][1]+dy*m/(k+1)); S.push(si); }
+      X.push(s[i][0]); Y.push(s[i][1]); S.push(si);
     }
   });
-  return {X:Float64Array.from(X),Y:Float64Array.from(Y),n:X.length};
+  return {X:Float64Array.from(X),Y:Float64Array.from(Y),S:Int16Array.from(S),ns:si+1,n:X.length};
 }
-function shapeScore(h,pts){
+function shapeScore(h,pts,tf){
   var t=tplFor(h.ch), n=pts.n, x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity;
   for(var i=0;i<n;i++){ x0=Math.min(x0,pts.X[i]); x1=Math.max(x1,pts.X[i]); y0=Math.min(y0,pts.Y[i]); y1=Math.max(y1,pts.Y[i]); }
   var dw=x1-x0, dh=y1-y0, cx=(x0+x1)/2, cy=(y0+y1)/2;
@@ -562,8 +868,35 @@ function shapeScore(h,pts){
   var Q={X:new Float64Array(n),Y:new Float64Array(n),n:n};
   if(nonuni){ for(var k=0;k<n;k++){ Q.X[k]=(pts.X[k]-cx)/dw*t.w+t.cx; Q.Y[k]=(pts.Y[k]-cy)/dh*t.h+t.cy; } }
   else{ var s=Math.max(dw,dh), ts=Math.max(t.w,t.h); for(var k2=0;k2<n;k2++){ Q.X[k2]=(pts.X[k2]-cx)/s*ts+t.cx; Q.Y[k2]=(pts.Y[k2]-cy)/s*ts+t.cy; } }
+  if(tf){
+    var cs=Math.cos(tf.rot), sn=Math.sin(tf.rot), sz=Math.max(t.w,t.h);
+    for(var m=0;m<n;m++){
+      var x=Q.X[m]-t.cx, y=Q.Y[m]-t.cy;
+      x+=tf.sh*y; x*=tf.sx; y*=tf.sy;
+      Q.X[m]=t.cx+x*cs-y*sn+tf.tx*sz; Q.Y[m]=t.cy+x*sn+y*cs+tf.ty*sz;
+    }
+  }
+  if(tf&&tf.off&&pts.S){ var sz2=Math.max(t.w,t.h), o=tf.off; for(var q=0;q<n;q++){ var si2=pts.S[q]*2; Q.X[q]+=o[si2]*sz2; Q.Y[q]+=o[si2+1]*sz2; } }
   orient(Q);
   return oneway(t,Q)+oneway(Q,t);
+}
+// 전체 위치·크기·기울기·비틀림이 조금 달라도 글자 모양이 맞으면 통과하도록, 작은 범위에서 가장 잘 맞는 배치를 찾습니다.
+var FREE={tx:[-.12,.12,.05],ty:[-.12,.12,.05],sx:[.75,1.3,.1],sy:[.75,1.3,.1],rot:[-.25,.25,.07],sh:[-.3,.3,.1]};
+function bestShape(h,pts){
+  var tf={tx:0,ty:0,sx:1,sy:1,rot:0,sh:0}, best=shapeScore(h,pts,tf), st={}, keys=Object.keys(FREE);
+  keys.forEach(function(k){ st[k]=FREE[k][2]; });
+  for(var it=0;it<4;it++){
+    var improved=false;
+    keys.forEach(function(k){
+      [-1,1].forEach(function(d){
+        var v=tf[k]+d*st[k]; if(v<FREE[k][0]||v>FREE[k][1]) return;
+        var old=tf[k]; tf[k]=v; var s=shapeScore(h,pts,tf);
+        if(s<best-1e-6){ best=s; improved=true; } else tf[k]=old;
+      });
+    });
+    if(!improved){ keys.forEach(function(k){ st[k]/=2; }); }
+  }
+  return best;
 }
 function nameOf(k){ var d=D.find(function(x){return x.ch===k;}); return d?(d.hun+' '+d.eum):GLYPH[k].name; }
 var RIV=null;
@@ -573,21 +906,41 @@ function judgeShape(h,raw){
   if(!strokes.length) return {empty:true};
   var pts=densify(strokes,5), x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity;
   for(var i=0;i<pts.n;i++){ x0=Math.min(x0,pts.X[i]); x1=Math.max(x1,pts.X[i]); y0=Math.min(y0,pts.Y[i]); y1=Math.max(y1,pts.Y[i]); }
-  if(Math.max(x1-x0,y1-y0)<40) return {ok:false,msg:'너무 작게 썼어요. 칸을 넓게 써 보세요.'};
-  var sum=shapeScore(h,pts), cnt=strokes.length, diff=Math.abs(cnt-h.strokes);
-  var ok=sum<=TH_SUM; // 획수·획순·방향은 보지 않고 모양만 비교합니다.
-  if(ok){
-    // 비슷한 다른 글자가 더 닮았다면 틀린 것으로 봅니다.
-    var best=null, bs=Infinity;
-    rivals().forEach(function(k){ if(k===h.ch) return; var s=shapeScore({ch:k},pts); if(s<bs){ bs=s; best=k; } });
-    if(best && bs<sum) return {ok:false,msg:'모양이 “'+best+'('+nameOf(best)+')”에 더 가까워요. 비슷한 글자라 헷갈렸을 수 있어요.',sum:sum,rival:best};
-    return {ok:true,msg:'잘 썼어요! 모양이 맞아요.',sum:sum};
-  }
-  return {ok:false,msg:'모양이 달라요. 글자 전체를 칸에 크게 써 보세요.',sum:sum};
+  var dim=Math.max(x1-x0,y1-y0);
+  if(dim<14) return {ok:false,msg:'너무 작게 썼어요. 조금만 더 크게 써 보세요.'};
+  if(dim<325) pts=densify(strokes,Math.max(0.8,dim/65));   // 글자가 작아도 점 간격을 글자 크기에 맞춰 같은 정밀도로 비교
+  var sum=bestShape(h,pts);
+  if(sum>TH_FREE) return {ok:false,msg:'모양이 달라요. 글자의 모양이 맞게 다시 써 보세요.',sum:sum};
+  // 비슷한 다른 글자가 훨씬 더 닮았다면 틀린 것으로 봅니다. (가까운 후보 6개만 정밀 비교)
+  var cand=rivals().filter(function(k){ return k!==h.ch; }).map(function(k){ return {k:k,s:shapeScore({ch:k},pts)}; })
+    .sort(function(x,y){ return x.s-y.s; }).slice(0,6);
+  var best=null, bs=Infinity, s0=shapeScore(h,pts), both=null;
+  cand.forEach(function(c){
+    var s=bestShape({ch:c.k},pts); if(s<bs){ bs=s; best=c.k; }
+    // 보정 전과 보정 후 점수가 모두 그 글자 쪽이 더 낮으면 (예: 士와 土처럼 선 길이만 다른 글자) 틀린 것으로 봅니다.
+    if(!both && c.s<s0 && s<sum) both=c.k;
+  });
+  if(both && !(best&&bs<RIVAL_RATIO*sum)) best=both, bs=0;
+  if(best && bs<RIVAL_RATIO*sum) return {ok:false,msg:'모양이 “'+best+'('+nameOf(best)+')”에 더 가까워요. 비슷한 글자라 헷갈렸을 수 있어요.',sum:sum,rival:best};
+  return {ok:true,msg:'잘 썼어요! 모양이 맞아요.',sum:sum};
 }
 function judge(h,raw){ return judgeShape(h,raw); }
 
 /* ---------- 문제 B: 훈·음 -> 한자 쓰기 ---------- */
+function compareHtml(h,raw){
+  var st=(raw||[]).filter(function(s){ return s.length; });
+  if(!st.length) return '';
+  var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+  st.forEach(function(s){ s.forEach(function(p){ x0=Math.min(x0,p[0]); x1=Math.max(x1,p[0]); y0=Math.min(y0,p[1]); y1=Math.max(y1,p[1]); }); });
+  var w=Math.max(x1-x0,1), hh=Math.max(y1-y0,1), sc=Math.min(76/w,76/hh,60), ox=50-((x0+x1)/2)*sc, oy=50-((y0+y1)/2)*sc;
+  var my='<svg viewBox="0 0 100 100" role="img" aria-label="내가 쓴 글씨">';
+  st.forEach(function(s){
+    if(s.length===1){ my+='<circle cx="'+(s[0][0]*sc+ox).toFixed(1)+'" cy="'+(s[0][1]*sc+oy).toFixed(1)+'" r="2.5" fill="var(--ink)"/>'; return; }
+    my+='<path d="M'+s.map(function(p){ return (p[0]*sc+ox).toFixed(1)+' '+(p[1]*sc+oy).toFixed(1); }).join(' L')+'" fill="none" stroke="var(--ink)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>';
+  });
+  my+='</svg>';
+  return '<div class="cmp"><div><span>내가 쓴 글씨</span>'+my+'</div><div><span>정확한 글씨</span>'+glyph(h.ch)+'</div></div>';
+}
 function answerB(h){
   return '<div class="stk">'+glyph(h.ch)+(h.paths?strokeSvg(h):'')+'</div>'+
     '<p class="info" style="text-align:center"><b>'+h.strokes+'획</b>'+(h.paths?' · 번호 순서대로 씁니다.':'')+'</p>'+
@@ -597,13 +950,13 @@ function renderB(q){
   var h=q.h, recorded=false, tries=0;
   view.innerHTML=
     '<div class="card"><span class="tag">훈·음 → 한자 쓰기</span>'+(missOf(q)>0?'<span class="tag rv">🔁 복습</span>':'')+
-    '<p class="q">아래 훈·음에 맞는 한자를 칸에 손가락이나 마우스로 써 보세요.</p>'+
+    '<p class="q">아래 훈·음에 맞는 한자를 칸에 손가락이나 마우스로 써 보세요. 위치와 크기는 상관없어요. <span class="tag">기회 2번</span></p>'+
     picsHtml(h)+
     '<div class="prompt">'+h.hun+' '+h.eum+'</div>'+
-    '<div class="padwrap"><div class="pw"><canvas id="pad" width="400" height="400"></canvas><div class="ghost" id="ghost">'+glyph(h.ch)+'</div></div></div>'+
+    '<div class="padwrap"><div class="pw"><canvas id="pad" width="500" height="500"></canvas><div class="ghost" id="ghost">'+glyph(h.ch)+'</div></div></div>'+
     '<div class="hrow" id="hrow"><span>💡 힌트</span><button class="btn hb" data-l="1">1단계</button><button class="btn hb" data-l="2">2단계</button><button class="btn hb" data-l="3">3단계</button></div>'+
     '<div id="hintbox"></div>'+
-    '<p class="hint" id="hintB">점선은 가운데 기준선입니다. 글자를 칸에 크게 쓰세요. ('+h.strokes+'획)</p>'+
+    '<p class="hint" id="hintB">점선 칸은 참고용이에요. 칸 밖으로 나가도 글씨 모양만 맞으면 돼요. ('+h.strokes+'획)</p>'+
     '<div class="row" id="rowB"><button class="btn" id="clr">지우기</button><button class="btn main" id="chkB">채점하기</button><button class="btn" id="showB">모르겠어요 (정답 보기)</button></div>'+
     '<div id="fb"></div></div>';
   var pad=setupPad();
@@ -618,44 +971,104 @@ function renderB(q){
     document.querySelectorAll('#hrow .hb').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-l')==String(l)); });
   }
   document.querySelectorAll('#hrow .hb').forEach(function(b){ b.onclick=function(){ showHint(parseInt(b.getAttribute('data-l'),10)); }; });
-  function record(ok){ if(!recorded){ recorded=true; R[idx]={ok:ok,q:q,prev:recordResult(q,ok)}; paintProgress(); } }
+  function record(ok){ if(!recorded){ recorded=true; R[idx]={ok:ok,q:q,prev:recordResult(q,ok)}; tally(q,ok?'firstok':'first'); paintProgress(); } }
+  function startTrace(done){
+    var gh=document.getElementById('ghost'); gh.style.display='block'; gh.classList.add('trace');
+    pad.clear(); document.getElementById('hintbox').innerHTML=''; document.getElementById('hrow').style.display='none';
+    document.getElementById('fb').innerHTML='';
+    document.getElementById('rowB').innerHTML='<button class="btn" id="clr">지우기</button><button class="btn main" id="traceDone">다 따라 썼어요 → 다음</button>';
+    document.getElementById('clr').onclick=function(){ pad.clear(); };
+    var hb=document.getElementById('hintB'); hb.innerHTML='✍️ <b>정답은 “'+h.ch+'” 이에요.</b> 연하게 보이는 글자를 한 번 따라 써 보세요. 다 쓰면 다음으로 넘어가요.';
+    document.getElementById('traceDone').onclick=function(){
+      if(!pad.get().length){ hb.innerHTML='✍️ 먼저 연한 글자를 따라 써 주세요. (정답: <b>'+h.ch+'</b>)'; return; }
+      gh.classList.remove('trace'); done();
+    };
+    document.getElementById('pad').scrollIntoView({behavior:'smooth',block:'center'});
+  }
   function finish(){ pad.lock(); document.getElementById('rowB').style.display='none'; document.getElementById('hrow').style.display='none'; document.getElementById('hintB').textContent=''; document.getElementById('hintbox').innerHTML=''; document.getElementById('ghost').style.display='none'; }
   document.getElementById('chkB').onclick=function(){
     var r=judge(h,pad.get());
     if(r.empty){ document.getElementById('hintB').textContent='먼저 칸에 한자를 써 주세요. 모르면 “정답 보기”를 누르세요.'; return; }
     tries++;
     if(r.ok){
-      record(true); finish(); paintProgress();
-      showFeedback(true, tries>1?'이번엔 맞았어요!':r.msg, '', {});
+      if(!recorded) record(true); else { R[idx].ok=true; R[idx].second=true; tally(q,'second'); }
+      finish(); paintProgress();
+      showFeedback(true, tries>1?'두 번째에 맞았어요!':r.msg, '', {cmp:compareHtml(h,pad.get())});
       return;
     }
     record(false);
     var fb=document.getElementById('fb'); fb.className='fb';
+    if(tries>=2){      // 두 번 모두 틀림 → 정답을 보여 주고 한 번 따라 쓰기
+      var att=pad.get().map(function(s){ return s.slice(); }), why=r.msg;
+      startTrace(function(){ finish(); paintProgress(); showFeedback(false,'두 번 모두 아쉬워요. '+why,compareHtml(h,att)+answerB(h),{fix:true}); });
+      return;
+    }
     fb.innerHTML='<div class="mark" id="mk">'+markSvg(false)+'</div><div class="verdict bad" id="vd"></div>'+
-      '<p class="hint" style="text-align:center">힌트 1단계를 보여 드려요. 다시 써 보거나 정답을 확인하세요.</p>'+
+      '<p class="hint" style="text-align:center">기회가 한 번 더 있어요. 힌트 1단계를 보여 드려요. 다시 써 보세요.</p>'+
       '<div class="row" style="margin-top:0"><button class="fix" id="fixBtn">맞게 썼는데 틀렸다고 나왔어요 (정답으로 고치기)</button></div>';
     document.getElementById('vd').textContent='💪 '+r.msg; playSound('no');
     showHint(1); pad.clear();
     document.getElementById('hintB').textContent='';
     document.getElementById('fixBtn').onclick=function(){
-      R[idx].ok=true; setMiss(q,Math.max(0,R[idx].prev-1)); finish(); paintProgress();
+      R[idx].ok=true; tally(q,'fix'); setMiss(q,Math.max(0,R[idx].prev-1)); finish(); paintProgress();
       showFeedback(true,'정답으로 고쳤어요.','',{});
     };
     fb.scrollIntoView({behavior:'smooth',block:'nearest'});
   };
   document.getElementById('showB').onclick=function(){
-    record(false); finish(); paintProgress();
-    showFeedback(false,'모르겠어요로 기록했어요. 정답을 확인해 보세요.',answerB(h),{});
+    record(false);
+    startTrace(function(){ finish(); paintProgress(); showFeedback(false,'모르겠어요로 기록했어요. 정답을 확인해 보세요.',answerB(h),{}); });
   };
 }
 
 /* ---------- 결과 ---------- */
+var REPSORT='weak', VIEWREP=false;
+function statOf(h){
+  var a=TALLY[h.ch+'|A']||[0,0,0,0], b=TALLY[h.ch+'|B']||[0,0,0,0];
+  var n=a[0]+b[0], first=a[1]+b[1], fin=a[2]+b[2];
+  var miss=Math.max(missOf({h:h,t:'A'}),missOf({h:h,t:'B'}));
+  var rate=n?first/n:null, lv, label;
+  if(!n){ lv=0; label='아직 안 풀었어요'; }
+  else if(n<2){ lv=1; label='🌱 시작했어요'; }
+  else if(rate>=0.8&&!miss){ lv=4; label='👍 익숙해요'; }
+  else if(rate>=0.5){ lv=3; label='🙂 보통이에요'; }
+  else { lv=2; label='💪 더 연습해요'; }
+  return {a:a,b:b,n:n,first:first,fin:fin,miss:miss,rate:rate,lv:lv,label:label};
+}
+function renderReport(sort){
+  advTok++; VIEWREP=true; REPSORT=sort||'weak'; paintTop();
+  var rows=D.map(function(h,i){ var s=statOf(h); s.h=h; s.i=i; return s; });
+  var tot=0, fin=0, first=0, cnt={0:0,1:0,2:0,3:0,4:0};
+  rows.forEach(function(s){ tot+=s.n; fin+=s.fin; first+=s.first; cnt[s.lv]++; });
+  if(REPSORT==='weak') rows.sort(function(x,y){ var kx=x.lv===0?9:x.lv, ky=y.lv===0?9:y.lv; return (kx-ky)||(x.rate-y.rate)||(x.i-y.i); });
+  var chip=function(label,v){ return '<span class="rchip">'+label+' <b>'+(v[0]?v[2]+'/'+v[0]:'-')+'</b>'+(v[0]&&v[1]!==v[2]?'<small> (첫 시도 '+v[1]+')</small>':'')+'</span>'; };
+  var list=rows.map(function(s){
+    return '<div class="rrow lv'+s.lv+'"><div class="rg">'+glyph(s.h.ch)+'</div><div class="rm"><b>'+s.h.hun+' '+s.h.eum+'</b>'+
+      '<span class="badge">'+s.label+(s.miss?' · 🔁 복습':'')+'</span>'+
+      '<div class="rs">'+chip('보기',s.a)+chip('쓰기',s.b)+'</div></div></div>';
+  }).join('');
+  var who=(USERMODE&&CUR)?('👤 '+CUR.replace(/</g,'&lt;')+'님'):'내';
+  view.innerHTML=
+    '<div class="card"><span class="tag">한자별 평가</span>'+
+    '<p class="q">'+who+' 한자별 평가예요. 지금까지 푼 모든 퀴즈를 합친 결과입니다.</p>'+
+    (tot?'<div class="split"><div>푼 문제<b>'+tot+'</b></div><div>정답률<b>'+Math.round(fin/tot*100)+'%</b></div><div>첫 시도 정답<b>'+Math.round(first/tot*100)+'%</b></div></div>'+
+      '<p class="info">👍 익숙해요 <b>'+cnt[4]+'</b> · 🙂 보통 <b>'+cnt[3]+'</b> · 💪 더 연습 <b>'+cnt[2]+'</b> · 🌱 시작 <b>'+cnt[1]+'</b> · 아직 안 풀었어요 <b>'+cnt[0]+'</b></p>':
+      '<p class="info">아직 푼 기록이 없어요. 퀴즈를 풀면 한자마다 평가가 쌓여요.</p>')+
+    '<div class="row"><button class="btn'+(REPSORT==='weak'?' main':'')+'" id="rpWeak">약한 한자부터</button><button class="btn'+(REPSORT==='order'?' main':'')+'" id="rpOrder">한자 순서대로</button></div>'+
+    '<div class="rlist">'+list+'</div>'+
+    '<p class="hint">정답 수/푼 수로 표시돼요. 평가는 첫 시도 정답률 기준이에요 (80% 이상 익숙, 50% 이상 보통).</p>'+
+    '<div class="row"><button class="btn main" id="rpHome">🏠 첫 페이지로 돌아가기</button></div></div>';
+  document.getElementById('rpWeak').onclick=function(){ renderReport('weak'); };
+  document.getElementById('rpOrder').onclick=function(){ renderReport('order'); };
+  document.getElementById('rpHome').onclick=renderStart;
+  window.scrollTo(0,0);
+}
 function renderResult(){
   var ok=0, a=[0,0], b=[0,0], wrong='', all='';
   R.forEach(function(r,i){
     if(r.ok) ok++;
     var t=r.q.t==='A'?a:b; t[1]++; if(r.ok) t[0]++;
-    var row='<tr><td>'+(i+1)+'</td><td>'+(r.q.t==='A'?'한자→훈·음':'훈·음→쓰기')+'</td><td>'+glyph(r.q.h.ch)+'</td><td>'+r.q.h.hun+' '+r.q.h.eum+'</td><td>'+(r.ok?'<span class="mk-ok">○</span>':'<span class="mk-no">✕</span>')+'</td></tr>';
+    var row='<tr><td>'+(i+1)+'</td><td>'+(r.q.t==='A'?'한자→훈·음':'훈·음→쓰기')+'</td><td>'+glyph(r.q.h.ch)+'</td><td>'+r.q.h.hun+' '+r.q.h.eum+'</td><td>'+(r.ok?'<span class="mk-ok">○</span>'+(r.second?' <small>(두 번째)</small>':''):'<span class="mk-no">✕</span>')+'</td></tr>';
     all+=row; if(!r.ok) wrong+=row;
   });
   var th='<table><thead><tr><th>#</th><th>유형</th><th>한자</th><th>훈·음</th><th>결과</th></tr></thead><tbody>';
@@ -668,18 +1081,20 @@ function renderResult(){
     (wrong?'<p class="info"><b>틀린 문제</b></p>'+th+wrong+'</tbody></table>':'<p class="info" style="text-align:center">틀린 문제가 없어요!</p>')+
     '<details><summary>전체 결과 보기</summary>'+th+all+'</tbody></table></details>'+
     (wrong?'<p class="info">🔁 틀린 문제는 다음 퀴즈에서 더 자주 나와요.</p>':'')+
-    '<div class="row"><button class="btn main" id="home">🏠 첫 페이지로 돌아가기</button><button class="btn" id="again">같은 개수로 다시 풀기</button></div></div>';
+    '<div class="row"><button class="btn main" id="home">🏠 첫 페이지로 돌아가기</button><button class="btn" id="again">같은 개수로 다시 풀기</button><button class="btn" id="repBtn2">📊 한자별 평가</button></div></div>';
+  document.getElementById('repBtn2').onclick=function(){ renderReport('weak'); };
   document.getElementById('again').onclick=function(){ newQuiz(TOTAL); render(); };
   document.getElementById('home').onclick=renderStart;
 }
 
 function render(){
   advTok++; paintProgress(); window.scrollTo(0,0);
-  if(idx>=TOTAL){ renderResult(); return; }
+  if(idx>=TOTAL){ if(USERMODE&&CUR&&!R.hd){ R.hd=true; addHist(TOTAL,R.filter(function(r){return r.ok;}).length); } renderResult(); return; }
   var q=Q[idx];
+  if(!q){ renderStart(); return; }
   if(q.t==='A') renderA(q); else renderB(q);
 }
-window.__hz={D:D,GLYPH:GLYPH,judgeShape:judgeShape,judgePaths:judgePaths,shapeScore:shapeScore,densify:densify,tplFor:tplFor,newQuiz:newQuiz,STATS:function(){return STATS;},setStats:function(s){STATS=s;},playSound:playSound,getQ:function(){return Q;}};
+window.__hz={D:D,GLYPH:GLYPH,judgeShape:judgeShape,judgePaths:judgePaths,shapeScore:shapeScore,densify:densify,tplFor:tplFor,newQuiz:newQuiz,bestShape:bestShape,resetUserData:resetUserData,resetEverything:resetEverything,renderReport:renderReport,tally:tally,TALLY:function(){return TALLY;},registerUser:registerUser,setUser:setUser,users:function(){return USERS;},cur:function(){return CUR;},hist:function(){return HIST;},STATS:function(){return STATS;},setStats:function(s){STATS=s;},playSound:playSound,getQ:function(){return Q;}};
 document.getElementById('snd').onclick=toggleSound; paintSnd();
 renderStart();
 initSync();
