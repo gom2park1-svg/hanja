@@ -83,6 +83,8 @@ body.quiz .hint{margin:4px 0;font-size:13px}
 .tag{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);background:var(--soft);border-radius:999px;padding:2px 10px;margin-bottom:8px}
 .q{font-size:15px;color:var(--sub);margin:0 0 6px}
 .gl{display:block;color:var(--ink)}
+.typed .txt[type=password]{letter-spacing:2px}
+.btn.sm{padding:6px 12px;font-size:13px}
 .typed{display:flex;flex-direction:column;gap:8px;margin:8px 0}
 .typed label{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--sub)}
 .typed label .txt{flex:1;min-width:0;font-size:20px;font-weight:700;padding:10px 12px;text-align:center;color:var(--ink)}
@@ -199,6 +201,10 @@ summary{cursor:pointer;font-weight:700;font-size:14px;padding:6px 0}
 .gi .e{font-size:22px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
 .gi .gl{width:44px;height:44px;margin:2px auto}
 .credit{font-size:11px;color:var(--sub);text-align:center;margin:8px 0 24px}
+
+.hbars{display:flex;align-items:flex-end;gap:6px;height:96px;margin:6px 0 14px}.hb{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;min-width:0}.hb span{width:100%;border-radius:4px 4px 0 0;display:block}.hb small{font-size:10px;color:var(--muted,#888)}
+.hday{margin:12px 0 0;border-top:1px solid rgba(128,128,128,.25);padding-top:8px}.hdh{display:flex;justify-content:space-between;gap:8px;margin-bottom:4px}
+.hrow{display:flex;align-items:center;gap:8px;padding:3px 0}.ht2{width:44px;font-variant-numeric:tabular-nums;color:var(--muted,#888);font-size:13px}.hm{flex:1;height:8px;background:rgba(128,128,128,.2);border-radius:4px;overflow:hidden;display:block}.hm span{display:block;height:100%}.hs{width:78px;text-align:right;font-size:13px}
 </style>
 </head>
 <body>
@@ -241,7 +247,7 @@ function loadUserData(){
     if(USERMODE&&CUR){ var h=localStorage.getItem('hanjaHist:'+CUR); if(h) HIST=JSON.parse(h)||[]; }
   }catch(e){}
 }
-function saveHist(){ try{ localStorage.setItem('hanjaHist:'+CUR,JSON.stringify(HIST.slice(-100))); }catch(e){} }
+function saveHist(){ try{ localStorage.setItem('hanjaHist:'+CUR,JSON.stringify(HIST.slice(-500))); }catch(e){} }
 try{ RESETALL=parseInt(localStorage.getItem('hanjaResetAll')||'0',10)||0; }catch(e){}
 loadUsers(); loadUserData();
 function persistLocal(){ try{ localStorage.setItem(skey(),JSON.stringify({s:STATS,t:TS,y:TALLY,z:RESET})); }catch(e){} }
@@ -251,6 +257,7 @@ function clearAllStats(){ Object.keys(STATS).forEach(touch); STATS={}; saveStats
 /* ---------- 기록 초기화 ---------- */
 function putNull(u){ return fetch(u,{method:'PUT',headers:{'Content-Type':'application/json'},body:'null'}); }
 function resetUserData(){
+  if(!ADM.unlocked) return false;
   var now=Date.now(); clearTimeout(pushTimer);
   STATS={}; TS={}; TALLY={}; HIST=[]; RESET=now; persistLocal(); if(USERMODE&&CUR) saveHist();
   if(!USERMODE){ Object.keys(STATS).forEach(touch); }
@@ -270,6 +277,7 @@ function wipeLocalAll(ts){
   USERS=[]; CUR=''; STATS={}; TS={}; TALLY={}; HIST=[]; RESET=0; RESETALL=ts;
 }
 function resetEverything(){
+  if(!ADM.unlocked) return false;
   var now=Date.now(); clearTimeout(pushTimer); wipeLocalAll(now);
   if(FB){
     var rm=fbRoom();
@@ -424,7 +432,7 @@ function fbPullMain(){
     }else m=mergeRemote(r[0]||{});
     SYNC='ok';
     if(m.changed){ persistLocal(); redraw=true; }
-    if(redraw&&!Q.length){ if(VIEWREP) renderReport(REPSORT); else renderStart(); }
+    if(redraw&&!Q.length){ if(VIEWHIST) renderHistory(); else if(VIEWREP) renderReport(REPSORT); else renderStart(); }
     if(m.localNewer) schedulePush();
     paintSync();
   }).catch(function(){ SYNC='err'; paintSync(); });
@@ -466,7 +474,7 @@ function userHtml(){
   }
   var h=HIST.slice(-5).reverse().map(function(x){ var d=new Date(x[0]); return (d.getMonth()+1)+'/'+d.getDate()+' <b>'+x[2]+'/'+x[1]+'</b>'; }).join(' · ');
   return '<div class="card"><span class="tag">사용자</span><div class="uhead">'+avatarHtml(CUR,64)+'<div class="col"><div class="nm">'+esc(CUR)+'</div><div class="acts"><button class="btn sm" id="avPick">📷 사진 변경</button>'+(getAvatar(CUR)?'<button class="btn sm" id="avDel">사진 삭제</button>':'')+'</div></div><input type="file" id="avFile" accept="image/*" hidden></div><div class="urow"><select id="uSel" class="txt">'+opts+'</select><button class="btn" id="uNew">+ 사용자 추가</button></div><p class="hint" id="avMsg"></p>'+form+
-    summaryHtml()+(h?'<p class="info">📈 최근 결과 '+h+'</p>':(summaryHtml()?'':'<p class="info">아직 푼 기록이 없어요. 한 번 풀면 여기에 결과가 쌓여요.</p>'))+'</div>';
+    summaryHtml()+(h?'<p class="info">📈 최근 결과 '+h+'</p><div class="row"><button class="btn sm" id="histBtn">🗓️ 날짜별 기록 보기</button></div>':(summaryHtml()?'':'<p class="info">아직 푼 기록이 없어요. 한 번 풀면 여기에 결과가 쌓여요.</p>'))+'</div>';
 }
 function summaryHtml(){
   var n=0, first=0, seen=0;
@@ -489,6 +497,7 @@ function summaryHtml(){
   return h+'<div class="row" style="margin-top:8px"><button class="btn sm" id="sumRep">📊 한자별 평가 전체 보기</button></div></div>';
 }
 function userBind(){
+  var hb=document.getElementById('histBtn'); if(hb) hb.onclick=function(){ renderHistory(); };
   var sr=document.getElementById('sumRep'); if(sr) sr.onclick=function(){ renderReport(); };
   if(!USERMODE) return;
   var add=document.getElementById('uAdd'), msg=document.getElementById('uMsg');
@@ -509,31 +518,94 @@ function userBind(){
   view.querySelectorAll('.ubtn').forEach(function(b){ b.onclick=function(){ setUser(b.getAttribute('data-u')); renderStart(); }; });
 }
 var RSTCONF='';
+/* ---- 관리자 비밀번호: 초기화는 비밀번호를 아는 관리자만 할 수 있어요 ---- */
+var ADM={hash:undefined,unlocked:false,err:'',msg:'',chg:false,busy:false,timer:0}, AKEY='hanjaAdmin';
+function sha(s){
+  var salt='hanja-admin-v1|'+s;
+  if(window.crypto&&crypto.subtle&&window.TextEncoder){
+    return crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt)).then(function(b){ return Array.from(new Uint8Array(b)).map(function(x){ return ('0'+x.toString(16)).slice(-2); }).join(''); });
+  }
+  var h1=5381,h2=52711; for(var i=0;i<salt.length;i++){ h1=((h1<<5)+h1+salt.charCodeAt(i))>>>0; h2=((h2<<5)^h2^salt.charCodeAt(i))>>>0; }
+  return Promise.resolve('f'+h1.toString(16)+h2.toString(16));
+}
+function admLocal(){ try{ return localStorage.getItem(AKEY)||''; }catch(e){ return ''; } }
+function admSaveLocal(h){ try{ if(h) localStorage.setItem(AKEY,h); else localStorage.removeItem(AKEY); }catch(e){} }
+function loadAdmin(){
+  var loc=admLocal(); ADM.err='';
+  if(!(FB&&USERMODE)){ ADM.hash=loc; return Promise.resolve(); }
+  return getJson(fbRoom()+'/admin.json').then(function(r){
+    if(typeof r==='string'&&r){ ADM.hash=r; admSaveLocal(r); }
+    else if(loc){ ADM.hash=loc; fetch(fbRoom()+'/admin.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(loc)}).catch(function(){}); }
+    else ADM.hash='';
+  }).catch(function(){
+    if(loc) ADM.hash=loc; else { ADM.hash=null; ADM.err='서버에 연결할 수 없어 관리자 설정을 확인하지 못했어요. 연결을 확인한 뒤 다시 열어 주세요.'; }
+  });
+}
+function admLockNow(){ ADM.unlocked=false; ADM.chg=false; clearTimeout(ADM.timer); }
+function admUnlockNow(){ ADM.unlocked=true; clearTimeout(ADM.timer); ADM.timer=setTimeout(function(){ admLockNow(); var bx=document.getElementById('rstBox'); if(bx){ RSTCONF=''; bx.innerHTML=rstBoxHtml(); rstBind(); } },10*60*1000); }
+function admSetPw(p1,p2){
+  if(p1.length<4) return Promise.resolve('비밀번호는 4자 이상으로 정해 주세요.');
+  if(p1!==p2) return Promise.resolve('두 번 입력한 비밀번호가 달라요.');
+  return sha(p1).then(function(h){
+    var save=function(){ ADM.hash=h; admSaveLocal(h); admUnlockNow(); ADM.chg=false; return '';
+    };
+    if(FB&&USERMODE){
+      return getJson(fbRoom()+'/admin.json').catch(function(){ return undefined; }).then(function(r){
+        if(r===undefined) return '서버에 연결할 수 없어 지금은 설정할 수 없어요.';
+        if(typeof r==='string'&&r&&!ADM.unlocked) { ADM.hash=r; admSaveLocal(r); return '이미 다른 기기에서 관리자 비밀번호가 설정되어 있어요. 그 비밀번호로 잠금을 풀어 주세요.'; }
+        return fetch(fbRoom()+'/admin.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(h)}).then(function(x){ if(!x.ok) throw 0; return save(); }).catch(function(){ return '저장하지 못했어요. 연결을 확인해 주세요.'; });
+      });
+    }
+    return save();
+  });
+}
 function rstPanel(){
-  var who=(USERMODE&&CUR)?CUR.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'님':'내';
-  return '<details id="rstset"><summary>🗑️ 기록 초기화</summary>'+
-    '<p class="info">풀이 기록을 지우고 처음부터 다시 시작할 수 있어요. 지운 기록은 되돌릴 수 없어요.'+(FB?' Firebase에 연결되어 있으면 다른 기기에도 함께 반영돼요.':'')+'</p>'+
+  return '<details id="rstset"><summary>🗑️ 기록 초기화 (관리자 전용)</summary>'+
+    '<p class="info">기록 초기화는 <b>관리자 비밀번호</b>를 아는 사람만 할 수 있어요. 지운 기록은 되돌릴 수 없어요.'+(FB?' Firebase에 연결되어 있으면 다른 기기에도 함께 반영돼요.':'')+'</p>'+
     '<div id="rstBox">'+rstBoxHtml()+'</div></details>';
 }
 function rstBoxHtml(){
   var who=(USERMODE&&CUR)?CUR.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'님':'내';
-  if(RSTCONF==='user') return '<p class="verdict bad" style="text-align:center">정말 '+who+' 기록을 모두 지울까요?</p><p class="info">틀린 문제 기록, 한자별 평가, 결과 내역이 모두 지워져요.</p><div class="row"><button class="btn danger" id="rstYes">네, 지웁니다</button><button class="btn" id="rstNo">취소</button></div>';
-  if(RSTCONF==='all') return '<p class="verdict bad" style="text-align:center">정말 모든 사용자와 기록을 지울까요?</p><p class="info">이 기기의 모든 사용자와 기록이 지워지고'+(FB?', 연결된 방(코드 '+FB.r+')의 모든 사용자·기록도 지워져요':'')+'. 사용자는 다시 등록해야 해요.</p><div class="row"><button class="btn danger" id="rstYes">네, 모두 지웁니다</button><button class="btn" id="rstNo">취소</button></div>';
-  return '<div class="row"><button class="btn" id="rstUser">'+who+' 기록 초기화</button>'+(USERMODE&&USERS.length?'<button class="btn" id="rstAll">모든 사용자·기록 삭제</button>':'')+'</div><p class="hint" id="rstMsg"></p>';
+  var msg='<p class="hint" id="admMsg" style="text-align:center;color:var(--no)">'+(ADM.msg||'')+'</p>';
+  if(ADM.hash===undefined) return '<p class="info">관리자 설정을 확인하는 중…</p>';
+  if(ADM.hash===null) return '<p class="info">'+ADM.err+'</p>';
+  if(ADM.hash==='') return '<p class="info"><b>처음 한 번, 관리자 비밀번호를 만들어 주세요.</b> 이 비밀번호를 아는 사람만 기록을 초기화할 수 있어요. 잊어버리면 되찾기 어려우니 꼭 적어 두세요.</p>'+
+    '<div class="typed"><label>비밀번호<input id="admPw1" class="txt" type="password" autocomplete="new-password" placeholder="4자 이상"></label><label>한 번 더<input id="admPw2" class="txt" type="password" autocomplete="new-password"></label></div>'+
+    '<div class="row"><button class="btn main" id="admSet">관리자 비밀번호 만들기</button></div>'+msg;
+  if(!ADM.unlocked) return '<div class="typed"><label>관리자 비밀번호<input id="admPw" class="txt" type="password" autocomplete="current-password"></label></div>'+
+    '<div class="row"><button class="btn main" id="admUnlock">🔓 잠금 해제</button></div>'+msg;
+  var cp=ADM.chg?'<div class="typed"><label>새 비밀번호<input id="admPw1" class="txt" type="password" autocomplete="new-password" placeholder="4자 이상"></label><label>한 번 더<input id="admPw2" class="txt" type="password" autocomplete="new-password"></label></div><div class="row"><button class="btn main" id="admChgGo">비밀번호 바꾸기</button><button class="btn" id="admChgNo">취소</button></div>':'';
+  var top='<p class="info" style="text-align:center">🔓 관리자 모드 <small>(10분 뒤 자동으로 잠겨요)</small></p>';
+  var foot='<div class="row"><button class="btn sm" id="admChg">🔑 비밀번호 변경</button><button class="btn sm" id="admLock">🔒 다시 잠그기</button></div>';
+  if(RSTCONF==='user') return top+'<p class="verdict bad" style="text-align:center">정말 '+who+' 기록을 모두 지울까요?</p><p class="info">틀린 문제 기록, 한자별 평가, 결과 내역이 모두 지워져요.</p><div class="row"><button class="btn danger" id="rstYes">네, 지웁니다</button><button class="btn" id="rstNo">취소</button></div>';
+  if(RSTCONF==='all') return top+'<p class="verdict bad" style="text-align:center">정말 모든 사용자와 기록을 지울까요?</p><p class="info">이 기기의 모든 사용자와 기록이 지워지고'+(FB?', 연결된 방(코드 '+FB.r+')의 모든 사용자·기록도 지워져요':'')+'. 사용자는 다시 등록해야 해요.</p><div class="row"><button class="btn danger" id="rstYes">네, 모두 지웁니다</button><button class="btn" id="rstNo">취소</button></div>';
+  return top+'<div class="row"><button class="btn" id="rstUser">'+who+' 기록 초기화</button>'+(USERMODE&&USERS.length?'<button class="btn" id="rstAll">모든 사용자·기록 삭제</button>':'')+'</div>'+cp+msg+foot+'<p class="hint" id="rstMsg"></p>';
 }
 function rstBind(){
   var box=document.getElementById('rstBox'); if(!box) return;
   var paint=function(){ box.innerHTML=rstBoxHtml(); rstBind(); };
-  var u=document.getElementById('rstUser'), a=document.getElementById('rstAll'), y=document.getElementById('rstYes'), n=document.getElementById('rstNo');
-  if(u) u.onclick=function(){ RSTCONF='user'; paint(); };
-  if(a) a.onclick=function(){ RSTCONF='all'; paint(); };
+  var $=function(id){ return document.getElementById(id); };
+  var dt=$('rstset'); if(dt&&!dt.getAttribute('data-b')){ dt.setAttribute('data-b','1'); dt.addEventListener('toggle',function(){ if(dt.open&&!ADM.busy){ ADM.hash=undefined; var b3=$('rstBox'); if(b3){ b3.innerHTML=rstBoxHtml(); rstBind(); } } }); }
+  if(ADM.hash===undefined&&!ADM.busy){ ADM.busy=true; loadAdmin().then(function(){ ADM.busy=false; if($('rstBox')) { var b2=$('rstBox'); b2.innerHTML=rstBoxHtml(); rstBind(); } }); }
+  var u=$('rstUser'), a=$('rstAll'), y=$('rstYes'), n=$('rstNo');
+  if(u) u.onclick=function(){ if(!ADM.unlocked) return; RSTCONF='user'; paint(); };
+  if(a) a.onclick=function(){ if(!ADM.unlocked) return; RSTCONF='all'; paint(); };
   if(n) n.onclick=function(){ RSTCONF=''; paint(); };
   if(y) y.onclick=function(){
     var was=RSTCONF; RSTCONF='';
     if(was==='user') resetUserData(); else resetEverything();
     renderStart();
-    var m=document.getElementById('rstMsg'); if(m) m.textContent='기록을 초기화했어요.';
+    var d=$('rstset'); if(d) d.open=true; var m=$('rstMsg'); if(m) m.textContent='기록을 초기화했어요.';
   };
+  var enter=function(el,fn){ if(el) el.onkeydown=function(e){ if(e.key==='Enter'&&!e.isComposing){ e.preventDefault(); fn(); } }; };
+  var doSet=function(){ admSetPw($('admPw1').value,$('admPw2').value).then(function(m){ ADM.msg=m; paint(); }); };
+  if($('admSet')) $('admSet').onclick=doSet; enter($('admPw2'),doSet);
+  var doUnlock=function(){ sha($('admPw').value).then(function(h){ if(h===ADM.hash){ ADM.msg=''; admUnlockNow(); } else ADM.msg='비밀번호가 맞지 않아요.'; paint(); }); };
+  if($('admUnlock')) $('admUnlock').onclick=doUnlock; enter($('admPw'),doUnlock);
+  if($('admLock')) $('admLock').onclick=function(){ admLockNow(); RSTCONF=''; ADM.msg=''; paint(); };
+  if($('admChg')) $('admChg').onclick=function(){ ADM.chg=true; ADM.msg=''; paint(); };
+  if($('admChgNo')) $('admChgNo').onclick=function(){ ADM.chg=false; ADM.msg=''; paint(); };
+  if($('admChgGo')) $('admChgGo').onclick=function(){ admSetPw($('admPw1').value,$('admPw2').value).then(function(m){ ADM.msg=m||''; if(!m) ADM.msg='비밀번호를 바꿨어요.'; paint(); }); };
 }
 function fbPanel(){
   if(window.claude&&window.claude.use) return '';
@@ -729,7 +801,7 @@ function showFeedback(ok,msg,detail,opts){
 
 /* ---------- 시작 화면 ---------- */
 function renderStart(){
-  advTok++; Q=[]; idx=0; R=[]; VIEWREP=false; paintProgress();
+  advTok++; Q=[]; idx=0; R=[]; VIEWREP=false; VIEWHIST=false; paintProgress();
   document.getElementById('lead').textContent='무작위 문제입니다. 한 번에 한 문제씩 나오고, 풀 때마다 ○ 또는 ✕로 알려 줍니다. 마지막에 몇 개 맞았는지 알려 드려요.';
   var rl=reviewList();
   setTimeout(paintSync,0);
@@ -743,7 +815,7 @@ function renderStart(){
     '<button class="btn setbtn" id="setBtn">🎯 유형별 10문제씩 <small>한자 쓰기 10 → 한자 보고 음·뜻 10 → 음·뜻 보고 한자 고르기 10 (총 30문제)</small></button>'+
     '<div class="cnt">'+[10,20,30,40].map(function(n){ return '<button class="btn" data-n="'+n+'">'+n+'문제<small>약 '+Math.round(n*0.4)+'분</small></button>'; }).join('')+'</div>'+
     '<div class="row"><button class="btn" id="repBtn">📊 한자별 평가 보기</button></div>'+
-    (rl.length?'<p class="info">🔁 틀렸던 문제가 있는 한자 <b>'+rl.length+'</b>자: '+rl.map(function(h){return h.ch;}).join(' ')+' — 더 자주 나와요. <button class="fix" id="clrStats">기록 지우기</button></p>':'<p class="info">틀린 문제는 기억해 두었다가 다음 퀴즈에 더 자주 내 드려요.</p>')+
+    (rl.length?'<p class="info">🔁 틀렸던 문제가 있는 한자 <b>'+rl.length+'</b>자: '+rl.map(function(h){return h.ch;}).join(' ')+' — 더 자주 나와요. (기록 초기화는 아래 관리자 메뉴에서만 할 수 있어요)</p>':'<p class="info">틀린 문제는 기억해 두었다가 다음 퀴즈에 더 자주 내 드려요.</p>')+
     '</div>')+
     '<div class="card">'+fbPanel()+rstPanel()+
     '<details><summary>이번 범위의 한자 '+D.length+'자 미리 보기</summary><div class="grid">'+items+'</div></details></div>';
@@ -753,7 +825,6 @@ function renderStart(){
   });
   fbBind(); userBind(); rstBind();
   var rb=document.getElementById('repBtn'); if(rb) rb.onclick=function(){ renderReport('weak'); };
-  var cs=document.getElementById('clrStats'); if(cs) cs.onclick=function(){ clearAllStats(); renderStart(); };
   window.scrollTo(0,0);
 }
 
@@ -1123,7 +1194,7 @@ function answerB(h){
     '<p class="info"><b>왜 이렇게 생겼나</b> '+h.origin+'</p><p class="info"><b>구별 요령</b> '+h.tip+'</p><p class="info"><b>낱말</b> '+wordsHtml(h)+'</p>';
 }
 function renderB(q){
-  var h=q.h, recorded=false, tries=0;
+  var h=q.h, recorded=false, tries=0, h3=false;   // h3: 3단계 힌트(따라 쓰기)를 본 문제
   view.innerHTML=
     '<div class="card"><span class="tag">훈·음 → 한자 쓰기</span>'+(missOf(q)>0?'<span class="tag rv">🔁 복습</span>':'')+
     '<span class="tag">기회 2번</span>'+
@@ -1139,9 +1210,10 @@ function renderB(q){
   var HT={
     1:'<b>힌트 1</b> '+h.strokes+'획이에요. '+h.tip,
     2:'<b>힌트 2</b> '+h.origin,
-    3:'<b>힌트 3</b> 칸에 연하게 보이는 글자를 따라 써 보세요.'
+    3:'<b>힌트 3</b> 칸에 연하게 보이는 글자를 따라 써 보세요. <b>(3단계를 보면 틀린 것으로 기록돼요)</b>'
   };
   function showHint(l){
+    if(l===3) h3=true;
     document.getElementById('hintbox').innerHTML='<div class="hintbox">💡 '+HT[l]+'</div>';
     document.getElementById('ghost').style.display=(l===3)?'block':'none';
     document.querySelectorAll('#hrow .hb').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-l')==String(l)); });
@@ -1166,6 +1238,12 @@ function renderB(q){
     var r=judge(h,pad.get());
     if(r.empty){ document.getElementById('hintB').textContent='먼저 칸에 한자를 써 주세요. 모르면 “모르겠어요”를 누르세요.'; return; }
     tries++;
+    if(r.ok&&h3){      // 3단계 힌트를 보고 쓴 것은 모양이 맞아도 틀린 것으로 기록
+      if(!recorded) record(false);
+      finish(); paintProgress();
+      showFeedback(false,'모양은 잘 썼지만, 3단계 힌트(따라 쓰기)를 봐서 틀린 것으로 기록했어요. 다음엔 힌트 없이 도전!','',{cmp:compareHtml(h,pad.get())});
+      return;
+    }
     if(r.ok){
       if(!recorded) record(true); else { R[idx].ok=true; R[idx].second=true; tally(q,'second'); }
       finish(); paintProgress();
@@ -1276,7 +1354,7 @@ function renderMatch(pages,pi){
 }
 
 /* ---------- 결과 ---------- */
-var REPSORT='weak', VIEWREP=false;
+var REPSORT='weak', VIEWREP=false, VIEWHIST=false;
 function statOf(h){
   var a=TALLY[h.ch+'|A']||[0,0,0,0], b=TALLY[h.ch+'|B']||[0,0,0,0], c=TALLY[h.ch+'|C']||[0,0,0,0];
   var n=a[0]+b[0]+c[0], first=a[1]+b[1]+c[1], fin=a[2]+b[2]+c[2];
@@ -1290,7 +1368,7 @@ function statOf(h){
   return {a:a,b:b,c:c,n:n,first:first,fin:fin,miss:miss,rate:rate,lv:lv,label:label};
 }
 function renderReport(sort){
-  advTok++; VIEWREP=true; REPSORT=sort||'weak'; paintTop();
+  advTok++; VIEWREP=true; VIEWHIST=false; REPSORT=sort||'weak'; paintTop();
   var rows=D.map(function(h,i){ var s=statOf(h); s.h=h; s.i=i; return s; });
   var tot=0, fin=0, first=0, cnt={0:0,1:0,2:0,3:0,4:0};
   rows.forEach(function(s){ tot+=s.n; fin+=s.fin; first+=s.first; cnt[s.lv]++; });
@@ -1315,6 +1393,36 @@ function renderReport(sort){
   document.getElementById('rpWeak').onclick=function(){ renderReport('weak'); };
   document.getElementById('rpOrder').onclick=function(){ renderReport('order'); };
   document.getElementById('rpHome').onclick=renderStart;
+  window.scrollTo(0,0);
+}
+function renderHistory(){
+  advTok++; VIEWREP=true; VIEWHIST=true; paintTop();
+  var who=(USERMODE&&CUR)?('👤 '+CUR.replace(/</g,'&lt;')+'님'):'내';
+  var H=HIST.slice().sort(function(a,b){ return b[0]-a[0]; });
+  var W=['일','월','화','수','목','금','토'], p2=function(n){ return n<10?'0'+n:''+n; };
+  var days=[], map={};
+  H.forEach(function(x){ var d=new Date(x[0]), k=d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
+    if(!map[k]){ map[k]={k:k,d:d,n:0,ok:0,rows:[]}; days.push(map[k]); }
+    var g=map[k]; g.n+=x[1]; g.ok+=x[2]; g.rows.push(x); });
+  var col=function(p){ return p>=80?'var(--ok)':(p>=50?'var(--accent)':'var(--no)'); };
+  var tn=0, tok=0; H.forEach(function(x){ tn+=x[1]; tok+=x[2]; });
+  var body='';
+  if(!H.length) body='<p class="info">아직 기록이 없어요. 퀴즈를 끝까지 풀면 날짜와 점수가 여기에 쌓여요.</p>';
+  else{
+    var recent=H.slice(0,12).reverse();
+    var bars='<div class="hbars">'+recent.map(function(x){ var p=x[1]?Math.round(x[2]/x[1]*100):0; var d=new Date(x[0]);
+      return '<div class="hb"><span style="height:'+Math.max(p,4)+'%;background:'+col(p)+'"></span><small>'+(d.getMonth()+1)+'/'+d.getDate()+'</small></div>'; }).join('')+'</div>';
+    body='<div class="split"><div>푼 날<b>'+days.length+'일</b></div><div>퀴즈 횟수<b>'+H.length+'회</b></div><div>전체 정답률<b>'+(tn?Math.round(tok/tn*100):0)+'%</b></div></div>'+
+      '<p class="sumt">📈 최근 '+recent.length+'회 점수 (오래된 → 최신)</p>'+bars+
+      days.map(function(g){ var p=g.n?Math.round(g.ok/g.n*100):0;
+        return '<div class="hday"><div class="hdh"><b>'+g.d.getFullYear()+'년 '+(g.d.getMonth()+1)+'월 '+g.d.getDate()+'일 ('+W[g.d.getDay()]+')</b><span style="color:'+col(p)+'">'+g.ok+'/'+g.n+' · '+p+'%</span></div>'+
+          g.rows.map(function(x){ var d=new Date(x[0]), q=x[1]?Math.round(x[2]/x[1]*100):0;
+            return '<div class="hrow"><span class="ht2">'+p2(d.getHours())+':'+p2(d.getMinutes())+'</span><span class="hm"><span style="width:'+q+'%;background:'+col(q)+'"></span></span><span class="hs">'+x[2]+'/'+x[1]+' <small>'+q+'%</small></span></div>'; }).join('')+'</div>'; }).join('');
+  }
+  view.innerHTML='<div class="card"><span class="tag">날짜별 기록</span><p class="q">'+who+' 퀴즈 기록이에요. 한 번 끝까지 푼 퀴즈마다 날짜·시각·점수가 저장돼요.</p>'+body+
+    '<div class="row"><button class="btn" id="hsRep">📊 한자별 평가</button><button class="btn main" id="hsHome">🏠 첫 페이지로</button></div></div>';
+  document.getElementById('hsHome').onclick=renderStart;
+  document.getElementById('hsRep').onclick=function(){ renderReport(); };
   window.scrollTo(0,0);
 }
 function renderResult(){
@@ -1352,7 +1460,7 @@ function render(){
   if(!q){ renderStart(); return; }
   if(q.t==='A') renderA(q); else if(q.t==='C') renderC(q); else renderB(q);
 }
-window.__hz={D:D,GLYPH:GLYPH,judgeShape:judgeShape,judgePaths:judgePaths,shapeScore:shapeScore,densify:densify,tplFor:tplFor,newQuiz:newQuiz,bestShape:bestShape,resetUserData:resetUserData,resetEverything:resetEverything,renderReport:renderReport,tally:tally,TALLY:function(){return TALLY;},registerUser:registerUser,setUser:setUser,users:function(){return USERS;},cur:function(){return CUR;},hist:function(){return HIST;},STATS:function(){return STATS;},setStats:function(s){STATS=s;},playSound:playSound,getQ:function(){return Q;}};
+window.__hz={D:D,GLYPH:GLYPH,judgeShape:judgeShape,judgePaths:judgePaths,shapeScore:shapeScore,densify:densify,tplFor:tplFor,newQuiz:newQuiz,bestShape:bestShape,resetUserData:resetUserData,resetEverything:resetEverything,admUnlockNow:admUnlockNow,admLockNow:admLockNow,renderReport:renderReport,tally:tally,TALLY:function(){return TALLY;},registerUser:registerUser,setUser:setUser,users:function(){return USERS;},cur:function(){return CUR;},hist:function(){return HIST;},STATS:function(){return STATS;},setStats:function(s){STATS=s;},playSound:playSound,getQ:function(){return Q;}};
 document.getElementById('snd').onclick=toggleSound; paintSnd();
 renderStart();
 initSync();
