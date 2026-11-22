@@ -46,6 +46,7 @@ body.quiz h1,body.quiz .lead,body.quiz .credit{display:none}
 body.quiz .topbar{margin-bottom:6px;padding-top:6px;padding-bottom:6px}
 body.quiz .pn{margin-bottom:6px;min-height:0}
 body.quiz .card{padding:10px 12px;margin-bottom:8px}
+body.quiz .big.bigA{width:clamp(96px,calc(100dvh - 560px),min(46vw,220px));height:clamp(96px,calc(100dvh - 560px),min(46vw,220px))}
 body.quiz .big{width:clamp(130px,calc(100dvh - 420px),min(78vw,340px));height:clamp(130px,calc(100dvh - 420px),min(78vw,340px));margin:4px auto 8px}
 body.quiz .opt{min-height:clamp(56px,9dvh,84px);font-size:clamp(20px,3.2dvh,28px)}
 body.quiz .opts{gap:10px}
@@ -82,6 +83,10 @@ body.quiz .hint{margin:4px 0;font-size:13px}
 .tag{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);background:var(--soft);border-radius:999px;padding:2px 10px;margin-bottom:8px}
 .q{font-size:15px;color:var(--sub);margin:0 0 6px}
 .gl{display:block;color:var(--ink)}
+.typed{display:flex;flex-direction:column;gap:8px;margin:8px 0}
+.typed label{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--sub)}
+.typed label .txt{flex:1;min-width:0;font-size:20px;font-weight:700;padding:10px 12px;text-align:center;color:var(--ink)}
+.txt.bad{border-color:var(--no);background:#fff0f0}.txt.good{border-color:var(--ok);background:#effaf2}
 .big{width:min(46vw,210px);height:min(46vw,210px);margin:6px auto 10px}
 .prompt{font-size:min(14vw,56px);font-weight:700;text-align:center;margin:2px 0 10px}
 .pics{display:flex;justify-content:center;gap:12px;font-size:46px;line-height:1.15;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
@@ -94,6 +99,19 @@ body.quiz .hint{margin:4px 0;font-size:13px}
 .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
 .opt{font-size:20px;font-weight:700;padding:12px 8px;min-height:56px}
+.mt{position:relative;display:flex;justify-content:space-between;gap:70px;margin:10px 0}
+.mcol{display:flex;flex-direction:column;gap:12px;z-index:2}
+.mR{flex:1}
+#mL{justify-content:space-around}
+.mlines{position:absolute;left:0;top:0;pointer-events:none;z-index:1;overflow:visible}
+.mb{border:3px solid var(--line);background:var(--card);border-radius:14px;color:var(--ink);cursor:pointer;font-family:inherit}
+.mb.ml{width:84px;height:84px;padding:6px;display:flex;align-items:center;justify-content:center}
+.mb.ml .mg{width:100%;height:100%}
+.mb.mr{min-height:84px;font-size:19px;font-weight:700;padding:8px 10px}
+.mb.sel{background:var(--t2);box-shadow:0 0 0 3px var(--accent)}
+.mb.lk{background:var(--okbg);cursor:default}
+.opt .og{width:clamp(56px,13dvh,100px);height:clamp(56px,13dvh,100px);display:block;margin:0 auto}
+.ans{width:64px;height:64px}
 .opt:disabled{cursor:default;opacity:1}
 .opt:nth-child(1){background:var(--t1);border-color:var(--tb1)}
 .opt:nth-child(2){background:var(--t2);border-color:var(--tb2)}
@@ -101,6 +119,8 @@ body.quiz .hint{margin:4px 0;font-size:13px}
 .opt:nth-child(4){background:var(--t4);border-color:var(--tb4)}
 .opt.right{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
 .opt.wrongsel{background:var(--nobg);border-color:var(--no);color:var(--no)}
+.setbtn{display:block;width:100%;margin-top:10px;font-size:19px;font-weight:800;padding:14px 10px;background:linear-gradient(135deg,var(--t2),var(--t3));border-color:var(--accent)}
+.setbtn small{display:block;font-size:12px;font-weight:400;color:var(--sub);margin-top:4px}
 .cnt{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
 .cnt .btn{font-size:22px;font-weight:800;padding:18px 8px}
 .cnt .btn small{display:block;font-size:12px;font-weight:400;color:var(--sub)}
@@ -575,7 +595,7 @@ function rateOf(q){ var e=TALLY[qkey(q)]; return e&&e[0]?(e[1]+1)/(e[0]+2):0.5; 
 function weightOf(q){ var r=rateOf(q); return 0.3+6*(1-r)*(1-r)+missOf(q); }
 function setMiss(q,v){ var k=qkey(q); if(v>0) STATS[k]=v; else delete STATS[k]; touch(k); saveStats(); }
 function recordResult(q,ok){ var prev=missOf(q); setMiss(q, ok?Math.max(0,prev-1):Math.min(5,prev+1)); return prev; }
-function reviewList(){ var s=[]; D.forEach(function(h){ if(missOf({h:h,t:'A'})>0||missOf({h:h,t:'B'})>0) s.push(h); }); return s; }
+function reviewList(){ var s=[]; D.forEach(function(h){ if(missOf({h:h,t:'A'})>0||missOf({h:h,t:'B'})>0||missOf({h:h,t:'C'})>0) s.push(h); }); return s; }
 
 /* ---------- 소리 (WebAudio 합성, 파일 없음) ---------- */
 var SOUND=true; try{ if(localStorage.getItem('hanjaSound')==='off') SOUND=false; }catch(e){}
@@ -603,9 +623,27 @@ function paintSnd(){ var b=document.getElementById('snd'); if(b) b.textContent=S
 function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
 
 /* ---------- 문제 만들기 ---------- */
+var QMODE='mix', SETN=10, SETORDER=['B','A','C'], SETNAME={B:'한자 쓰기',A:'한자 보고 음·뜻 쓰기',C:'음·뜻 보고 한자 고르기'};
+// 유형별로 SETN문제씩: ① 한자 적기 ② 한자 → 음·뜻 입력 ③ 음·뜻 → 한자 고르기 (유형마다 서로 다른 한자, 틀린 한자는 더 자주)
+function newSetQuiz(){
+  QMODE='set'; TOTAL=SETN*SETORDER.length; var seq=[];
+  SETORDER.forEach(function(tp){
+    var left=shuffle(D.map(function(h){ return {h:h,t:tp}; })), part=[];
+    while(part.length<SETN && left.length){
+      var prev=(part.length?part[part.length-1]:seq[seq.length-1]);
+      var cands=left.filter(function(q){ return !prev||q.h.ch!==prev.h.ch; }); if(!cands.length) cands=left.slice();
+      var tot=0; cands.forEach(function(q){ tot+=weightOf(q); });
+      var r=Math.random()*tot, pick=cands[cands.length-1];
+      for(var i=0;i<cands.length;i++){ r-=weightOf(cands[i]); if(r<=0){ pick=cands[i]; break; } }
+      left.splice(left.indexOf(pick),1); part.push(pick);
+    }
+    seq=seq.concat(part);
+  });
+  Q=seq; idx=0; R=[];
+}
 function newQuiz(n){
-  TOTAL=n;
-  var pool=[]; D.forEach(function(h){ pool.push({h:h,t:'A'}); pool.push({h:h,t:'B'}); });
+  QMODE='mix'; TOTAL=n;
+  var pool=[]; D.forEach(function(h){ pool.push({h:h,t:'A'}); pool.push({h:h,t:'B'}); pool.push({h:h,t:'C'}); });
   var left=shuffle(pool.slice()), seq=[];
   while(seq.length<n && left.length){
     var recent=seq.slice(-3).map(function(q){return q.h.ch;});
@@ -651,7 +689,8 @@ function paintProgress(){
   bw.style.display='block';
   pn.textContent='';
   if(USERMODE&&CUR){ var who=document.createElement('span'); who.className='who'; who.innerHTML=avatarHtml(CUR,22)+escH(CUR); pn.appendChild(who); }
-  pn.appendChild(document.createTextNode(idx>=TOTAL?'결과':('문제 '+(idx+1)+' / '+TOTAL)));
+  var sec=(QMODE==='set'&&idx<TOTAL)?(' · '+(Math.floor(idx/SETN)+1)+'단계 '+SETNAME[Q[idx].t]+' '+(idx%SETN+1)+'/'+SETN):'';
+  pn.appendChild(document.createTextNode(idx>=TOTAL?'결과':('문제 '+(idx+1)+' / '+TOTAL+sec)));
   fill.style.width=Math.round(R.length/TOTAL*100)+'%';
 }
 function wordsHtml(h){ return h.words.map(function(w){return '<span class="w">'+w[0]+'</span>'+w[1]+'('+w[2]+')';}).join(' · '); }
@@ -700,13 +739,15 @@ function renderStart(){
     '<div class="deco">🐦 🐴 🌸 🌧️ 👑 🐟 🎋</div>'+
     userHtml()+
     (USERMODE&&!CUR?'':'<div class="card"><span class="tag">문제 수 고르기</span>'+
-    '<p class="q">한자 '+D.length+'자에서 한자→훈·음, 훈·음→쓰기 문제가 섞여 나옵니다. 몇 문제를 풀까요?</p>'+
+    '<p class="q">한자 '+D.length+'자에서 한자→훈·음(입력), 훈·음→한자 쓰기, 훈·음→한자 고르기 문제가 섞여 나옵니다. 몇 문제를 풀까요?</p>'+
+    '<button class="btn setbtn" id="setBtn">🎯 유형별 10문제씩 <small>한자 쓰기 10 → 한자 보고 음·뜻 10 → 음·뜻 보고 한자 고르기 10 (총 30문제)</small></button>'+
     '<div class="cnt">'+[10,20,30,40].map(function(n){ return '<button class="btn" data-n="'+n+'">'+n+'문제<small>약 '+Math.round(n*0.4)+'분</small></button>'; }).join('')+'</div>'+
     '<div class="row"><button class="btn" id="repBtn">📊 한자별 평가 보기</button></div>'+
     (rl.length?'<p class="info">🔁 틀렸던 문제가 있는 한자 <b>'+rl.length+'</b>자: '+rl.map(function(h){return h.ch;}).join(' ')+' — 더 자주 나와요. <button class="fix" id="clrStats">기록 지우기</button></p>':'<p class="info">틀린 문제는 기억해 두었다가 다음 퀴즈에 더 자주 내 드려요.</p>')+
     '</div>')+
     '<div class="card">'+fbPanel()+rstPanel()+
     '<details><summary>이번 범위의 한자 '+D.length+'자 미리 보기</summary><div class="grid">'+items+'</div></details></div>';
+  var sb=document.getElementById('setBtn'); if(sb) sb.onclick=function(){ newSetQuiz(); render(); };
   view.querySelectorAll('.cnt .btn').forEach(function(b){
     b.onclick=function(){ newQuiz(parseInt(b.getAttribute('data-n'),10)); render(); };
   });
@@ -717,42 +758,56 @@ function renderStart(){
 }
 
 /* ---------- 문제 A: 한자 -> 훈·음 ---------- */
+// 훈(뜻)·음(소리)이 여러 가지로 읽히는 한자는 다른 정답도 인정합니다.
+var ALT_HUN={'一':['하나','한'],'二':['둘','두'],'三':['셋','석','세'],'竹':['대','대나무'],'魚':['고기','물고기'],'母':['어미','어머니'],'父':['아비','아버지'],'白':['희다','흰'],'生':['날','나다','살다'],'子':['아들','아이'],'自':['스스로','자기']};
+function normTxt(s){ return String(s||'').normalize('NFC').replace(/[\s·.,/]+/g,''); }
+function hunOK(h,s){ s=normTxt(s); if(!s) return false; return [h.hun].concat(ALT_HUN[h.ch]||[]).some(function(a){ return normTxt(a)===s; }); }
+function eumOK(h,s){ s=normTxt(s); if(!s) return false; var parts=String(h.eum).split('/').map(normTxt); return parts.indexOf(s)>=0||normTxt(h.eum)===s; }
 function renderA(q){
-  var h=q.h, answer=h.hun+' '+h.eum;
+  var h=q.h, answer=h.hun+' '+h.eum, tries=0, done=false;
   view.innerHTML=
-    '<div class="card"><span class="tag">한자 → 훈·음</span>'+(missOf(q)>0?'<span class="tag rv">🔁 복습</span>':'')+
-    '<p class="q">이 한자의 훈(뜻)과 음(소리)으로 알맞은 것을 고르세요. <span class="tag">기회 2번</span></p>'+
-    glyph(h.ch,'big')+
-    '<div class="opts" id="opts"></div><div id="fb"></div></div>';
-  var all=shuffle([answer].concat(h.wrong)), box=document.getElementById('opts'), tries=0;
-  all.forEach(function(txt){
-    var b=document.createElement('button'); b.className='btn opt'; b.textContent=txt;
-    b.onclick=function(){
-      tries++;
-      var ok=txt===answer;
-      if(tries===1){ R[idx]={ok:ok,q:q,prev:recordResult(q,ok)}; tally(q,ok?'firstok':'first'); }
-      else if(ok){ R[idx].ok=true; R[idx].second=true; tally(q,'second'); }
-      paintProgress();
-      var detail=picsHtml(h)+'<div class="meanbox"><p class="mean">'+answer+'</p></div>'+
-        '<p class="info"><b>왜 이렇게 생겼나</b> '+h.origin+'</p><p class="info"><b>구별 요령</b> '+h.tip+'</p><p class="info"><b>낱말</b> '+wordsHtml(h)+'</p>';
-      if(ok){
-        box.querySelectorAll('button').forEach(function(x){ x.disabled=true; if(x.textContent===answer) x.classList.add('right'); });
-        showFeedback(true, tries>1?'두 번째에 맞았어요! “'+answer+'”':'정답이에요! “'+answer+'”', detail);
-        return;
-      }
-      b.disabled=true; b.classList.add('wrongsel');
-      if(tries===1){      // 두 번째 기회
-        var fb=document.getElementById('fb'); fb.className='fb';
-        fb.innerHTML='<div class="mark" id="mk">'+markSvg(false)+'</div><div class="verdict bad" id="vd"></div><p class="hint" style="text-align:center">기회가 한 번 더 있어요. 다른 보기를 골라 보세요.</p>';
-        document.getElementById('vd').textContent='💪 아쉬워요!'; playSound('no');
-        fb.scrollIntoView({behavior:'smooth',block:'nearest'});
-        return;
-      }
-      box.querySelectorAll('button').forEach(function(x){ x.disabled=true; if(x.textContent===answer) x.classList.add('right'); });
-      showFeedback(false,'두 번 모두 아쉬워요. 정답은 “'+answer+'”입니다.',detail);
-    };
-    box.appendChild(b);
-  });
+    '<div class="card"><span class="tag">한자 → 훈·음 쓰기</span>'+(missOf(q)>0?'<span class="tag rv">🔁 복습</span>':'')+'<span class="tag">기회 2번</span>'+
+    glyph(h.ch,'big bigA')+
+    '<div class="typed"><label>뜻(훈)<input id="inHun" class="txt" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="next" placeholder="예) 말"></label>'+
+    '<label>음(소리)<input id="inEum" class="txt" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="예) 마"></label></div>'+
+    '<div class="row"><button class="btn main" id="chkA">확인</button><button class="btn" id="showA">모르겠어요</button></div>'+
+    '<div id="fb"></div></div>';
+  var iH=document.getElementById('inHun'), iE=document.getElementById('inEum');
+  var detail=function(){ return picsHtml(h)+'<div class="meanbox"><p class="mean">'+answer+'</p></div>'+
+    '<p class="info"><b>왜 이렇게 생겼나</b> '+h.origin+'</p><p class="info"><b>구별 요령</b> '+h.tip+'</p><p class="info"><b>낱말</b> '+wordsHtml(h)+'</p>'; };
+  var lock=function(){ iH.disabled=true; iE.disabled=true; document.getElementById('chkA').disabled=true; document.getElementById('showA').disabled=true; };
+  function submit(){
+    if(done) return;
+    if(!normTxt(iH.value)||!normTxt(iE.value)){ var fb0=document.getElementById('fb'); fb0.className='fb'; fb0.innerHTML='<p class="hint" style="text-align:center">뜻(훈)과 음(소리)을 둘 다 써 주세요. 모르면 “모르겠어요”를 누르세요.</p>'; (normTxt(iH.value)?iE:iH).focus(); return; }
+    var okH=hunOK(h,iH.value), okE=eumOK(h,iE.value), ok=okH&&okE;
+    tries++;
+    if(tries===1){ R[idx]={ok:ok,q:q,prev:recordResult(q,ok)}; tally(q,ok?'firstok':'first'); }
+    else if(ok){ R[idx].ok=true; R[idx].second=true; tally(q,'second'); }
+    paintProgress();
+    iH.classList.toggle('bad',!okH); iE.classList.toggle('bad',!okE); iH.classList.toggle('good',okH); iE.classList.toggle('good',okE);
+    if(ok){ done=true; lock(); showFeedback(true, tries>1?'두 번째에 맞았어요! “'+answer+'”':'정답이에요! “'+answer+'”', detail()); return; }
+    if(tries===1){      // 두 번째 기회: 어느 쪽이 틀렸는지와 그림 힌트
+      var fb=document.getElementById('fb'); fb.className='fb';
+      var which=!okH&&!okE?'뜻과 음이 모두':(!okH?'뜻(훈)이':'음(소리)이');
+      fb.innerHTML='<div class="mark" id="mk">'+markSvg(false)+'</div><div class="verdict bad" id="vd"></div>'+picsHtml(h)+'<p class="hint" style="text-align:center">'+which+' 달라요. 그림을 보고 한 번 더 써 보세요.</p>';
+      document.getElementById('vd').textContent='💪 아쉬워요!'; playSound('no');
+      (okH?iE:iH).focus(); iH.select&&0; fb.scrollIntoView({behavior:'smooth',block:'nearest'});
+      return;
+    }
+    done=true; lock();
+    showFeedback(false,'두 번 모두 아쉬워요. 정답은 “'+answer+'”입니다.',detail());
+  }
+  document.getElementById('chkA').onclick=submit;
+  document.getElementById('showA').onclick=function(){
+    if(done) return; done=true; lock();
+    if(tries===0){ R[idx]={ok:false,q:q,prev:recordResult(q,false)}; tally(q,'first'); }
+    paintProgress();
+    showFeedback(false,'모르겠어요로 기록했어요. 정답은 “'+answer+'”입니다.',detail());
+  };
+  iH.onkeydown=function(e){ if(e.key==='Enter'&&!e.isComposing){ e.preventDefault(); iE.focus(); } };
+  iE.onkeydown=function(e){ if(e.key==='Enter'&&!e.isComposing){ e.preventDefault(); submit(); } };
+  [iH,iE].forEach(function(el){ el.oninput=function(){ el.classList.remove('bad','good'); }; });
+  if(window.matchMedia&&matchMedia('(pointer:fine)').matches) iH.focus();
 }
 
 /* ---------- 손글씨 칸 ---------- */
@@ -962,9 +1017,30 @@ function bestShape(h,pts){
 function nameOf(k){ var d=D.find(function(x){return x.ch===k;}); return d?(d.hun+' '+d.eum):GLYPH[k].name; }
 var RIV=null;
 function rivals(){ if(!RIV) RIV=Object.keys(GLYPH); return RIV; }
+// 一·二·三은 가로선의 개수가 곧 글자입니다. 줄 사이 간격·길이·위치는 상관없이 '가로선이 몇 개인가'로 판정합니다.
+var LINECH={'一':1,'二':2,'三':3};
+function judgeLines(h,strokes){
+  var n=LINECH[h.ch], info=strokes.map(function(s){
+    var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9; s.forEach(function(p){ x0=Math.min(x0,p[0]); x1=Math.max(x1,p[0]); y0=Math.min(y0,p[1]); y1=Math.max(y1,p[1]); });
+    return {w:x1-x0,h:y1-y0,cy:(y0+y1)/2,len:Math.hypot(x1-x0,y1-y0)};
+  });
+  var mx=0; info.forEach(function(i){ mx=Math.max(mx,i.len); });
+  if(mx<14) return {ok:false,msg:'너무 작게 썼어요. 조금만 더 크게 써 보세요.'};
+  var lines=[], other=0;
+  info.forEach(function(i){
+    if(i.len<0.2*mx) return;                       // 아주 짧은 점·흔적은 무시
+    if(i.w>=2.2*i.h) lines.push(i); else other++;  // 가로에 가까운 선만 가로선으로 센다 (기울기 약 25° 이내)
+  });
+  if(other) return {ok:false,msg:'가로선만 그어야 해요. 세로나 비스듬한 획이 섞여 있어요. 가로선 '+n+'개를 그어 보세요.'};
+  if(lines.length!==n) return {ok:false,msg:'가로선이 '+lines.length+'개예요. 가로선 '+n+'개를 그어 보세요.'};
+  lines.sort(function(a,b){ return a.cy-b.cy; });
+  for(var k=1;k<lines.length;k++) if(lines[k].cy-lines[k-1].cy<12) return {ok:false,msg:'줄이 너무 붙어 있어요. 가로선 '+n+'개를 조금 떨어뜨려 그어 보세요.'};
+  return {ok:true,msg:'잘 썼어요! 가로선 '+n+'개가 맞아요.',sum:0};
+}
 function judgeShape(h,raw){
   var strokes=raw.filter(function(s){ return s.length>0; });
   if(!strokes.length) return {empty:true};
+  if(LINECH[h.ch]) return judgeLines(h,strokes);
   var pts=densify(strokes,5), x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity;
   for(var i=0;i<pts.n;i++){ x0=Math.min(x0,pts.X[i]); x1=Math.max(x1,pts.X[i]); y0=Math.min(y0,pts.Y[i]); y1=Math.max(y1,pts.Y[i]); }
   var dim=Math.max(x1-x0,y1-y0);
@@ -986,6 +1062,45 @@ function judgeShape(h,raw){
   return {ok:true,msg:'잘 썼어요! 모양이 맞아요.',sum:sum};
 }
 function judge(h,raw){ return judgeShape(h,raw); }
+
+/* ---------- 문제 C: 훈·음 -> 한자 고르기 ---------- */
+function renderC(q){
+  var h=q.h, answer=h.hun+' '+h.eum, tries=0, done=false;
+  var others=D.filter(function(x){ return x.ch!==h.ch; });
+  others.sort(function(x,y){ return (Math.abs(x.strokes-h.strokes)-Math.abs(y.strokes-h.strokes))+(Math.random()-0.5)*5; });
+  var opts=shuffle([h].concat(others.slice(0,3)));
+  view.innerHTML=
+    '<div class="card"><span class="tag">훈·음 → 한자 고르기</span>'+(missOf(q)>0?'<span class="tag rv">🔁 복습</span>':'')+'<span class="tag">기회 2번</span>'+
+    picsHtml(h)+'<div class="prompt">'+h.hun+' '+h.eum+'</div>'+
+    '<div class="opts" id="opts"></div><div id="fb"></div></div>';
+  var box=document.getElementById('opts');
+  var detail=function(){ return '<div class="meanbox"><p class="mean">'+answer+'</p></div>'+
+    '<p class="info"><b>왜 이렇게 생겼나</b> '+h.origin+'</p><p class="info"><b>구별 요령</b> '+h.tip+'</p><p class="info"><b>낱말</b> '+wordsHtml(h)+'</p>'; };
+  var reveal=function(){ box.querySelectorAll('button').forEach(function(x){ x.disabled=true; if(x.getAttribute('data-ch')===h.ch) x.classList.add('right'); }); };
+  opts.forEach(function(o){
+    var b=document.createElement('button'); b.className='btn opt'; b.setAttribute('data-ch',o.ch); b.setAttribute('aria-label',o.ch); b.innerHTML=glyph(o.ch,'og');
+    b.onclick=function(){
+      if(done) return;
+      tries++;
+      var ok=o.ch===h.ch;
+      if(tries===1){ R[idx]={ok:ok,q:q,prev:recordResult(q,ok)}; tally(q,ok?'firstok':'first'); }
+      else if(ok){ R[idx].ok=true; R[idx].second=true; tally(q,'second'); }
+      paintProgress();
+      if(ok){ done=true; reveal(); showFeedback(true, tries>1?'두 번째에 맞았어요! “'+answer+'”':'정답이에요! “'+answer+'”', detail()); return; }
+      b.disabled=true; b.classList.add('wrongsel');
+      if(tries===1){
+        var fb=document.getElementById('fb'); fb.className='fb';
+        fb.innerHTML='<div class="mark" id="mk">'+markSvg(false)+'</div><div class="verdict bad" id="vd"></div><p class="hint" style="text-align:center">기회가 한 번 더 있어요. 다른 한자를 골라 보세요.</p>';
+        document.getElementById('vd').textContent='💪 아쉬워요!'; playSound('no');
+        fb.scrollIntoView({behavior:'smooth',block:'nearest'});
+        return;
+      }
+      done=true; reveal();
+      showFeedback(false,'두 번 모두 아쉬워요. 정답은 “'+answer+'” → '+h.ch+' 입니다.',detail()+'<div class="row"><span class="tag">정답 한자</span>'+glyph(h.ch,'ans')+'</div>');
+    };
+    box.appendChild(b);
+  });
+}
 
 /* ---------- 문제 B: 훈·음 -> 한자 쓰기 ---------- */
 function compareHtml(h,raw){
@@ -1049,7 +1164,7 @@ function renderB(q){
   function finish(){ pad.lock(); document.getElementById('rowB').style.display='none'; document.getElementById('hrow').style.display='none'; document.getElementById('hintB').textContent=''; document.getElementById('hintbox').innerHTML=''; document.getElementById('ghost').style.display='none'; }
   document.getElementById('chkB').onclick=function(){
     var r=judge(h,pad.get());
-    if(r.empty){ document.getElementById('hintB').textContent='먼저 칸에 한자를 써 주세요. 모르면 “정답 보기”를 누르세요.'; return; }
+    if(r.empty){ document.getElementById('hintB').textContent='먼저 칸에 한자를 써 주세요. 모르면 “모르겠어요”를 누르세요.'; return; }
     tries++;
     if(r.ok){
       if(!recorded) record(true); else { R[idx].ok=true; R[idx].second=true; tally(q,'second'); }
@@ -1082,19 +1197,97 @@ function renderB(q){
   };
 }
 
+/* ---------- 마무리: 틀린 한자 선 이어 맞추기 ---------- */
+var MCOL=['#e8569b','#3a9bdc','#f5a623','#3fb27f','#8a6fdf','#ff7a59'];
+function wrongHanja(){ var seen={}, out=[]; R.forEach(function(r){ if(r&&!r.ok&&!seen[r.q.h.ch]){ seen[r.q.h.ch]=1; out.push(r.q.h); } }); return out; }
+function startMatch(list){
+  var pages=[], rest=list.slice();
+  while(rest.length>6) pages.push(rest.splice(0,5));
+  if(rest.length) pages.push(rest);
+  R.mdone=false; renderMatch(pages,0);
+}
+function renderMatch(pages,pi){
+  advTok++; var items=pages[pi], n=items.length;
+  // 오른쪽에는 정답 훈·음 외에 관계없는 '다른 보기' 2~3개를 더 섞어 둡니다. (i가 -1이면 다른 보기)
+  var inList={}; items.forEach(function(h){ inList[h.ch]=1; });
+  var pool=D.filter(function(h){ return !inList[h.ch]; });
+  pool.sort(function(a,b){ return (Math.abs(a.strokes-items[0].strokes)-Math.abs(b.strokes-items[0].strokes))+(Math.random()-0.5)*8; });
+  var nx=Math.min(pool.length,2+Math.floor(Math.random()*2));
+  var rlist=shuffle(items.map(function(h,i){ return {i:i,t:h.hun+' '+h.eum}; }).concat(pool.slice(0,nx).map(function(h){ return {i:-1,t:h.hun+' '+h.eum}; })));
+  var pairs={}, lock={}, sel=null;                                // pairs: 왼쪽 i -> 오른쪽 j
+  view.innerHTML='<div class="card"><span class="tag">마무리 복습</span><span class="tag">'+(pi+1)+' / '+pages.length+'</span>'+
+    '<p class="q">틀렸던 한자예요. 왼쪽 한자와 오른쪽 훈·음을 눌러서 선으로 이어 보세요. 오른쪽에는 관계없는 보기도 섞여 있어요. 이은 선을 다시 누르면 풀 수 있어요.</p>'+
+    '<div class="mt" id="mt"><div class="mcol" id="mL"></div><div class="mcol mR" id="mR"></div><svg class="mlines" id="mSvg"></svg></div>'+
+    '<div id="mMsg" class="hint" style="text-align:center;min-height:20px"></div>'+
+    '<div class="row"><button class="btn main" id="mChk" disabled>확인하기</button><button class="btn" id="mSkip">건너뛰기</button></div></div>';
+  var L=document.getElementById('mL'), Rr=document.getElementById('mR'), svg=document.getElementById('mSvg'), msg=document.getElementById('mMsg'), chk=document.getElementById('mChk');
+  var lb=[], rb=[];
+  items.forEach(function(h,i){ var b=document.createElement('button'); b.className='mb ml'; b.innerHTML=glyph(h.ch,'mg'); b.setAttribute('aria-label',h.ch); b.onclick=function(){ pick('L',i); }; L.appendChild(b); lb.push(b); });
+  rlist.forEach(function(o,j){ var b=document.createElement('button'); b.className='mb mr'; b.textContent=o.t; b.onclick=function(){ pick('R',j); }; Rr.appendChild(b); rb.push(b); });
+  function rightOf(i){ return pairs[i]; }
+  function leftOf(j){ for(var i in pairs) if(pairs[i]===j) return +i; return -1; }
+  function colorOf(i){ return MCOL[i%MCOL.length]; }
+  function pick(side,x){
+    msg.textContent='';
+    var i=side==='L'?x:leftOf(x), j=side==='R'?x:rightOf(x);
+    if(side==='L'&&lock[x]||side==='R'&&leftOf(x)>=0&&lock[leftOf(x)]) return;
+    if(side==='L'&&rightOf(x)!==undefined){ delete pairs[x]; sel=null; paint(); return; }          // 이은 줄 풀기
+    if(side==='R'&&leftOf(x)>=0){ delete pairs[leftOf(x)]; sel=null; paint(); return; }
+    if(sel&&sel.side!==side){
+      var li=side==='L'?x:sel.i, rj=side==='R'?x:sel.i;
+      pairs[li]=rj; sel=null; paint(); return;
+    }
+    sel={side:side,i:x}; paint();
+  }
+  function paint(){
+    lb.forEach(function(b,i){ var c=rightOf(i)!==undefined; b.style.borderColor=c?colorOf(i):''; b.classList.toggle('sel',!!(sel&&sel.side==='L'&&sel.i===i)); b.classList.toggle('lk',!!lock[i]); });
+    rb.forEach(function(b,j){ var li=leftOf(j); b.style.borderColor=li>=0?colorOf(li):''; b.classList.toggle('sel',!!(sel&&sel.side==='R'&&sel.i===j)); b.classList.toggle('lk',li>=0&&!!lock[li]); });
+    chk.disabled=Object.keys(pairs).length<n;
+    drawLines();
+  }
+  function drawLines(res){
+    var box=document.getElementById('mt'); if(!box) return; var br=box.getBoundingClientRect(), html='';
+    svg.setAttribute('width',br.width); svg.setAttribute('height',br.height);
+    Object.keys(pairs).forEach(function(i){
+      var a=lb[i].getBoundingClientRect(), b=rb[pairs[i]].getBoundingClientRect();
+      var col=res&&res[i]!==undefined?(res[i]?'#2fa36b':'#e5484d'):(lock[i]?'#2fa36b':colorOf(+i));
+      html+='<line x1="'+(a.right-br.left)+'" y1="'+(a.top+a.height/2-br.top)+'" x2="'+(b.left-br.left)+'" y2="'+(b.top+b.height/2-br.top)+'" stroke="'+col+'" stroke-width="5" stroke-linecap="round"/>';
+    });
+    svg.innerHTML=html;
+  }
+  function next(){ if(pi+1<pages.length) renderMatch(pages,pi+1); else { R.mdone=true; renderResult(); window.scrollTo(0,0); } }
+  chk.onclick=function(){
+    var res={}, bad=0;
+    Object.keys(pairs).forEach(function(i){ res[i]=rlist[pairs[i]].i===+i; if(!res[i]) bad++; });
+    drawLines(res);
+    Object.keys(res).forEach(function(i){ if(res[i]) lock[i]=true; });
+    chk.disabled=true;
+    if(!bad){
+      playSound('ok'); paint(); msg.innerHTML='<b style="color:var(--ok)">🎉 모두 맞았어요!</b>';
+      chk.textContent=(pi+1<pages.length?'다음 →':'결과 보기 →'); chk.disabled=false; chk.onclick=next; document.getElementById('mSkip').style.display='none';
+      return;
+    }
+    playSound('no'); msg.innerHTML='<b style="color:var(--no)">💪 '+bad+'개가 틀렸어요. 빨간 줄을 다시 이어 보세요.</b>';
+    setTimeout(function(){ Object.keys(res).forEach(function(i){ if(!res[i]) delete pairs[i]; }); sel=null; paint(); },1400);
+  };
+  document.getElementById('mSkip').onclick=next;
+  window.addEventListener('resize',function(){ if(document.getElementById('mSvg')===svg) drawLines(); });
+  paint(); window.scrollTo(0,0);
+}
+
 /* ---------- 결과 ---------- */
 var REPSORT='weak', VIEWREP=false;
 function statOf(h){
-  var a=TALLY[h.ch+'|A']||[0,0,0,0], b=TALLY[h.ch+'|B']||[0,0,0,0];
-  var n=a[0]+b[0], first=a[1]+b[1], fin=a[2]+b[2];
-  var miss=Math.max(missOf({h:h,t:'A'}),missOf({h:h,t:'B'}));
+  var a=TALLY[h.ch+'|A']||[0,0,0,0], b=TALLY[h.ch+'|B']||[0,0,0,0], c=TALLY[h.ch+'|C']||[0,0,0,0];
+  var n=a[0]+b[0]+c[0], first=a[1]+b[1]+c[1], fin=a[2]+b[2]+c[2];
+  var miss=Math.max(missOf({h:h,t:'A'}),missOf({h:h,t:'B'}),missOf({h:h,t:'C'}));
   var rate=n?first/n:null, lv, label;
   if(!n){ lv=0; label='아직 안 풀었어요'; }
   else if(n<2){ lv=1; label='🌱 시작했어요'; }
   else if(rate>=0.8&&!miss){ lv=4; label='👍 익숙해요'; }
   else if(rate>=0.5){ lv=3; label='🙂 보통이에요'; }
   else { lv=2; label='💪 더 연습해요'; }
-  return {a:a,b:b,n:n,first:first,fin:fin,miss:miss,rate:rate,lv:lv,label:label};
+  return {a:a,b:b,c:c,n:n,first:first,fin:fin,miss:miss,rate:rate,lv:lv,label:label};
 }
 function renderReport(sort){
   advTok++; VIEWREP=true; REPSORT=sort||'weak'; paintTop();
@@ -1106,7 +1299,7 @@ function renderReport(sort){
   var list=rows.map(function(s){
     return '<div class="rrow lv'+s.lv+'"><div class="rg">'+glyph(s.h.ch)+'</div><div class="rm"><b>'+s.h.hun+' '+s.h.eum+'</b>'+
       '<span class="badge">'+s.label+(s.miss?' · 🔁 복습':'')+'</span>'+
-      '<div class="rs">'+chip('보기',s.a)+chip('쓰기',s.b)+'</div></div></div>';
+      '<div class="rs">'+chip('훈·음',s.a)+chip('쓰기',s.b)+chip('고르기',s.c)+'</div></div></div>';
   }).join('');
   var who=(USERMODE&&CUR)?('👤 '+CUR.replace(/</g,'&lt;')+'님'):'내';
   view.innerHTML=
@@ -1125,11 +1318,11 @@ function renderReport(sort){
   window.scrollTo(0,0);
 }
 function renderResult(){
-  var ok=0, a=[0,0], b=[0,0], wrong='', all='';
+  var ok=0, a=[0,0], b=[0,0], c=[0,0], wrong='', all='', TN={A:'한자→훈·음',B:'훈·음→쓰기',C:'훈·음→고르기'};
   R.forEach(function(r,i){
     if(r.ok) ok++;
-    var t=r.q.t==='A'?a:b; t[1]++; if(r.ok) t[0]++;
-    var row='<tr><td>'+(i+1)+'</td><td>'+(r.q.t==='A'?'한자→훈·음':'훈·음→쓰기')+'</td><td>'+glyph(r.q.h.ch)+'</td><td>'+r.q.h.hun+' '+r.q.h.eum+'</td><td>'+(r.ok?'<span class="mk-ok">○</span>'+(r.second?' <small>(두 번째)</small>':''):'<span class="mk-no">✕</span>')+'</td></tr>';
+    var t=r.q.t==='A'?a:(r.q.t==='B'?b:c); t[1]++; if(r.ok) t[0]++;
+    var row='<tr><td>'+(i+1)+'</td><td>'+TN[r.q.t]+'</td><td>'+glyph(r.q.h.ch)+'</td><td>'+r.q.h.hun+' '+r.q.h.eum+'</td><td>'+(r.ok?'<span class="mk-ok">○</span>'+(r.second?' <small>(두 번째)</small>':''):'<span class="mk-no">✕</span>')+'</td></tr>';
     all+=row; if(!r.ok) wrong+=row;
   });
   var th='<table><thead><tr><th>#</th><th>유형</th><th>한자</th><th>훈·음</th><th>결과</th></tr></thead><tbody>';
@@ -1138,22 +1331,26 @@ function renderResult(){
   view.innerHTML=
     '<div class="card"><span class="tag">결과</span>'+
     '<div class="score"><div class="n">'+ok+'<small> / '+TOTAL+'</small></div><div class="msg">'+TOTAL+'문제 중 '+ok+'개 맞았어요. '+msg+'</div></div>'+
-    '<div class="split"><div>한자 → 훈·음<b>'+a[0]+' / '+a[1]+'</b></div><div>훈·음 → 쓰기<b>'+b[0]+' / '+b[1]+'</b></div></div>'+
+    '<div class="split"><div>한자 → 훈·음<b>'+a[0]+' / '+a[1]+'</b></div><div>훈·음 → 쓰기<b>'+b[0]+' / '+b[1]+'</b></div><div>훈·음 → 고르기<b>'+c[0]+' / '+c[1]+'</b></div></div>'+
     (wrong?'<p class="info"><b>틀린 문제</b></p>'+th+wrong+'</tbody></table>':'<p class="info" style="text-align:center">틀린 문제가 없어요!</p>')+
     '<details><summary>전체 결과 보기</summary>'+th+all+'</tbody></table></details>'+
     (wrong?'<p class="info">🔁 틀린 문제는 다음 퀴즈에서 더 자주 나와요.</p>':'')+
     '<div class="row"><button class="btn main" id="home">🏠 첫 페이지로 돌아가기</button><button class="btn" id="again">같은 개수로 다시 풀기</button><button class="btn" id="repBtn2">📊 한자별 평가</button></div></div>';
   document.getElementById('repBtn2').onclick=function(){ renderReport('weak'); };
-  document.getElementById('again').onclick=function(){ newQuiz(TOTAL); render(); };
+  document.getElementById('again').onclick=function(){ if(QMODE==='set') newSetQuiz(); else newQuiz(TOTAL); render(); };
   document.getElementById('home').onclick=renderStart;
 }
 
 function render(){
   advTok++; paintProgress(); window.scrollTo(0,0);
-  if(idx>=TOTAL){ if(USERMODE&&CUR&&!R.hd){ R.hd=true; addHist(TOTAL,R.filter(function(r){return r.ok;}).length); } renderResult(); return; }
+  if(idx>=TOTAL){
+    if(USERMODE&&CUR&&!R.hd){ R.hd=true; addHist(TOTAL,R.filter(function(r){return r.ok;}).length); }
+    if(!R.mdone){ var wl=wrongHanja(); if(wl.length){ startMatch(wl); return; } }
+    renderResult(); return;
+  }
   var q=Q[idx];
   if(!q){ renderStart(); return; }
-  if(q.t==='A') renderA(q); else renderB(q);
+  if(q.t==='A') renderA(q); else if(q.t==='C') renderC(q); else renderB(q);
 }
 window.__hz={D:D,GLYPH:GLYPH,judgeShape:judgeShape,judgePaths:judgePaths,shapeScore:shapeScore,densify:densify,tplFor:tplFor,newQuiz:newQuiz,bestShape:bestShape,resetUserData:resetUserData,resetEverything:resetEverything,renderReport:renderReport,tally:tally,TALLY:function(){return TALLY;},registerUser:registerUser,setUser:setUser,users:function(){return USERS;},cur:function(){return CUR;},hist:function(){return HIST;},STATS:function(){return STATS;},setStats:function(s){STATS=s;},playSound:playSound,getQ:function(){return Q;}};
 document.getElementById('snd').onclick=toggleSound; paintSnd();
